@@ -1,1576 +1,3000 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Happy Birthday Lau Shan Miao!</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Caveat:wght@700&family=Nunito:wght@400;700;900&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Lau Shan Miao!</title>
+  <link rel="icon" type="image/jpeg"
+    href="https://www.fearfreehappyhomes.com/wp-content/uploads/2020/08/bigstock-Closeup-Meowing-Ginger-Cat-On-97254212.jpg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Caveat:wght@700&family=Nunito:wght@400;700;900&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --pink: #FF85A1;
-    --pink-light: #FFD6E0;
-    --pink-deep: #E0547A;
-    --yellow: #FFD93D;
-    --peach: #FFB347;
-    --lilac: #C8A2C8;
-    --cream: #FFF8F0;
-    --dark: #3D2B4D;
-  }
-
-  body {
-    background: linear-gradient(135deg, #FFD6E0 0%, #FFF0F5 40%, #E8D5FF 100%);
-    min-height: 100vh;
-    font-family: 'Nunito', sans-serif;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* Floating hearts background */
-  .bg-hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-  .bg-hearts span {
-    position: absolute;
-    font-size: 1.2rem;
-    opacity: 0.15;
-    animation: floatHeart linear infinite;
-  }
-
-  @keyframes floatHeart {
-    0% { transform: translateY(110vh) rotate(0deg); opacity: 0.15; }
-    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-  }
-
-  /* Header */
-  .header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    text-align: center; padding: 10px 20px;
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(12px);
-    border-bottom: 2px dashed var(--pink);
-  }
-
-  .header h1 {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    color: var(--pink-deep);
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 0 var(--pink-light);
-  }
-
-  .header p {
-    font-size: 0.75rem;
-    color: var(--dark);
-    opacity: 0.6;
-    margin-top: 2px;
-  }
-
-  /* Main layout */
-  .main {
-    display: flex;
-    height: 100vh;
-    padding-top: 70px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Camera area */
-  #camera-wrap {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 10px;
-  }
-
-  #camera-frame {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    border: 4px solid var(--pink);
-    box-shadow: 0 8px 32px rgba(255,133,161,0.4), inset 0 0 0 2px white;
-    max-height: calc(100vh - 100px);
-    aspect-ratio: 4/3;
-  }
-
-  #video { width: 100%; height: 100%; object-fit: cover; display: block; transform: scaleX(-1); }
-  #canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); }
-
-  /* Cat overlay panel */
-  #cat-panel {
-    width: 280px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
-  }
-
-  /* Reaction bubble */
-  #reaction-bubble {
-    background: white;
-    border-radius: 20px;
-    border: 3px solid var(--pink);
-    padding: 16px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(255,133,161,0.3);
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-
-  #reaction-bubble::before {
-    content: '';
-    position: absolute;
-    left: -18px; top: 50%;
-    transform: translateY(-50%);
-    border: 10px solid transparent;
-    border-right-color: var(--pink);
-  }
-  #reaction-bubble::after {
-    content: '';
-    position: absolute;
-    left: -12px; top: 50%;
-    transform: translateY(-50%);
-    border: 8px solid transparent;
-    border-right-color: white;
-  }
-
-  .cat-emoji-big {
-    font-size: 4.5rem;
-    line-height: 1;
-    margin-bottom: 6px;
-    animation: catBounce 0.6s ease;
-    /* 3D layered shadow effect */
-    filter: drop-shadow(0 4px 0 rgba(0,0,0,0.18))
-            drop-shadow(0 8px 12px rgba(255,133,161,0.35));
-    text-shadow:
-      2px 2px 0 rgba(0,0,0,0.12),
-      4px 4px 0 rgba(0,0,0,0.07),
-      0 6px 20px rgba(255,133,161,0.4);
-    transform-style: preserve-3d;
-  }
-
-  .cat-img-big {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 3px solid var(--pink-light);
-    margin-bottom: 6px;
-    /* Slower pop animation */
-    animation: imgPop 1.2s cubic-bezier(0.34,1.56,0.64,1);
-    box-shadow:
-      0 8px 32px rgba(255,133,161,0.4),
-      0 2px 8px rgba(0,0,0,0.1),
-      inset 0 1px 0 rgba(255,255,255,0.4);
-    display: none;
-    flex-shrink: 0;
-  }
-
-  @keyframes catBounce {
-    0%   { transform: scale(0) rotate(-35deg); }
-    40%  { transform: scale(1.6) rotate(15deg); }
-    70%  { transform: scale(0.85) rotate(-5deg); }
-    100% { transform: scale(1) rotate(0deg); }
-  }
-
-  /* Zoom-out pop: starts very oversized and snaps to real size powerfully */
-  @keyframes imgPop {
-    0%   { transform: scale(3.5) rotate(-20deg); opacity: 0; filter: contrast(1.5) brightness(1.2); }
-    35%  { opacity: 1; transform: scale(1.8) rotate(10deg); filter: contrast(1.2) brightness(1.1); }
-    65%  { transform: scale(0.85) rotate(-5deg); }
-    85%  { transform: scale(1.1) rotate(3deg); }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; filter: none; }
-  }
-
-  .reaction-name {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.1rem;
-    color: var(--pink-deep);
-  }
-
-  .reaction-text {
-    font-size: 0.8rem;
-    color: var(--dark);
-    opacity: 0.7;
-    margin-top: 4px;
-    line-height: 1.3;
-  }
-
-  /* Gesture guide */
-  .gesture-guide {
-    background: white;
-    border-radius: 18px;
-    border: 2px solid var(--pink-light);
-    padding: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  .gesture-guide h3 {
-    font-family: 'Fredoka One', cursive;
-    color: var(--pink-deep);
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    text-align: center;
-  }
-
-  .gesture-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 6px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-size: 0.75rem;
-  }
-
-  .gesture-item:hover { background: var(--pink-light); }
-  .gesture-icon { font-size: 1.3rem; width: 28px; text-align: center; flex-shrink: 0; }
-  .gesture-label { color: var(--dark); font-weight: 700; font-size: 0.72rem; }
-  .gesture-desc { color: #888; font-size: 0.65rem; }
-
-  .gesture-active {
-    background: linear-gradient(90deg, var(--pink-light), #fff0f5) !important;
-    border: 1.5px solid var(--pink);
-  }
-
-  /* Birthday banner */
-  .bday-banner {
-    background: linear-gradient(135deg, var(--yellow), var(--peach));
-    border-radius: 16px;
-    padding: 12px;
-    text-align: center;
-    border: 2px solid white;
-    box-shadow: 0 4px 16px rgba(255,180,70,0.4);
-  }
-
-  .bday-banner p {
-    font-family: 'Fredoka One', cursive;
-    font-size: 0.9rem;
-    color: white;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
-    line-height: 1.4;
-  }
-
-  /* Confetti explosion */
-  #confetti-container {
-    position: fixed; inset: 0; pointer-events: none; z-index: 999;
-  }
-
-  .conf {
-    position: absolute;
-    border-radius: 50%;
-    animation: confettiFall linear forwards;
-  }
-
-  @keyframes confettiFall {
-    0% { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
-  }
-
-  /* Status badge */
-  #status-badge {
-    position: absolute;
-    bottom: 12px; left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.65);
-    color: white;
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(8px);
-    z-index: 10;
-    transition: all 0.3s;
-  }
-
-  /* Hand skeleton colors */
-  .paw-detected { border-color: var(--yellow) !important; box-shadow: 0 0 24px rgba(255,217,61,0.5) !important; }
-
-  /* Floating cat stickers on detection */
-  .cat-sticker {
-    position: fixed;
-    pointer-events: none;
-    z-index: 500;
-    font-size: 2.5rem;
-    /* Slowed down from 2.5s to 4s for visibility */
-    animation: stickerPop 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  @keyframes stickerPop {
-    0%   { transform: scale(5) translateY(0); opacity: 0; filter: blur(4px); }
-    15%  { transform: scale(4) rotate(15deg) translateY(0); opacity: 1; filter: blur(0); }
-    30%  { transform: scale(0.8) rotate(-10deg) translateY(0); opacity: 1; }
-    45%  { transform: scale(1.2) rotate(5deg) translateY(0); opacity: 1; }
-    60%  { transform: scale(1) rotate(0deg) translateY(0); opacity: 1; }
-    85%  { transform: scale(1) translateY(-100px); opacity: 0.9; }
-    100% { transform: scale(0.9) translateY(-250px); opacity: 0; }
-  }
-
-  /* Paw print trail on canvas */
-  .paw-trail { opacity: 0; }
-
-  /* Loading screen */
-  #loading {
-    position: fixed; inset: 0;
-    background: linear-gradient(135deg, #FFD6E0, #E8D5FF);
-    z-index: 9999;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 16px;
-    transition: opacity 0.8s ease;
-  }
-
-  #loading h2 {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2rem;
-    color: var(--pink-deep);
-  }
-
-  #loading p { color: var(--dark); opacity: 0.6; font-size: 0.9rem; }
-
-  .loading-cat { font-size: 5rem; animation: loadingBounce 1s ease infinite; }
-
-  @keyframes loadingBounce {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-  }
-
-  .loading-bar {
-    width: 200px; height: 8px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .loading-bar-fill {
-    height: 100%;
-    background: var(--pink-deep);
-    border-radius: 4px;
-    animation: loadBar 2.5s ease forwards;
-  }
-
-  @keyframes loadBar { 0% { width: 0; } 100% { width: 100%; } }
-
-
-  /* === GLASSMORPHISM MOBILE REDESIGN === */
-  @media (max-width: 700px) {
-    body { overflow-y: auto; }
-
-    .header {
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.4);
-      box-shadow: 0 4px 24px rgba(255,133,161,0.15);
-      padding: 8px 14px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .header h1 { font-size: clamp(0.95rem, 4vw, 1.3rem); }
-    .header p  { font-size: 0.68rem; }
 
-    .main {
-      flex-direction: column;
-      height: auto;
+    :root {
+      --pink: #FF85A1;
+      --pink-light: #FFD6E0;
+      --pink-deep: #E0547A;
+      --yellow: #FFD93D;
+      --peach: #FFB347;
+      --lilac: #C8A2C8;
+      --cream: #FFF8F0;
+      --dark: #3D2B4D;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FFD6E0 0%, #FFF0F5 40%, #E8D5FF 100%);
       min-height: 100vh;
-      padding-top: 58px;
-      gap: 10px;
+      font-family: 'Nunito', sans-serif;
+      overflow: hidden;
+      position: relative;
     }
 
-    #camera-wrap { padding: 8px; }
-
-    #camera-frame {
-      border-radius: 20px;
-      border: 3px solid rgba(255,133,161,0.5);
-      box-shadow:
-        0 8px 32px rgba(255,133,161,0.3),
-        0 0 0 1px rgba(255,255,255,0.3),
-        inset 0 0 0 1px rgba(255,255,255,0.5);
-      aspect-ratio: 4/3;
-      max-height: 55vw;
+    /* Floating hearts background */
+    .bg-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* Cat panel: vertical stack on mobile */
-    #cat-panel {
-      width: 100%;
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: visible;
-      padding: 0 12px 16px;
-      gap: 10px;
+    .bg-hearts span {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.15;
+      animation: floatHeart linear infinite;
     }
 
-    /* Top row: reaction + birthday side by side */
-    #top-row-mobile {
-      display: flex !important;
-      flex-direction: row;
-      gap: 10px;
-      width: 100%;
-      align-items: stretch;
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0.15;
+      }
+
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
-    #reaction-bubble {
-      flex: 1;
-      min-width: 0;
-      min-height: 200px;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1.5px solid rgba(255,255,255,0.5);
-      box-shadow:
-        0 8px 32px rgba(255,133,161,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.6);
-      border-radius: 20px;
-    }
-    #reaction-bubble::before, #reaction-bubble::after { display: none; }
-
-    .cat-img-big { width: 110px; height: 110px; }
-    .cat-emoji-big { font-size: 3.2rem; }
-
-    /* Birthday banner: compact widget beside reaction */
-    .bday-banner {
-      width: 110px;
-      flex-shrink: 0;
-      padding: 10px 8px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(255,217,61,0.9), rgba(255,179,71,0.9));
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      text-align: center;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1.5px solid rgba(255,255,255,0.5);
-      box-shadow:
-        0 8px 24px rgba(255,180,70,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.5);
-    }
-    .bday-banner p { font-size: 0.72rem; }
-
-    /* Gesture guide: full width below */
-    .gesture-guide {
-      width: 100%;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1.5px solid rgba(255,255,255,0.5);
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.6);
-      border-radius: 18px;
+      border-bottom: 2px dashed var(--pink);
     }
 
-    /* 2-column grid for gesture items */
-    .gesture-guide > .gesture-item {
-      width: calc(50% - 4px);
-      display: inline-flex;
+    .header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--pink-deep);
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0 var(--pink-light);
     }
-    .gesture-guide {
+
+    .header p {
+      font-size: 0.75rem;
+      color: var(--dark);
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+
+    /* Main layout */
+    .main {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
+      height: 100vh;
+      padding-top: 70px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Camera area */
+    #camera-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
       padding: 10px;
     }
-    .gesture-guide h3 { width: 100%; text-align: center; margin-bottom: 4px; }
 
-    #status-badge { font-size: 0.65rem; padding: 4px 10px; }
-  }
+    #camera-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 4px solid var(--pink);
+      box-shadow: 0 8px 32px rgba(255, 133, 161, 0.4), inset 0 0 0 2px white;
+      max-height: calc(100vh - 100px);
+      aspect-ratio: 4/3;
+    }
 
-  /* === INTRO CALENDAR FLOW === */
-  #intro-overlay {
-    position: fixed; inset: 0; z-index: 8000;
-    background: linear-gradient(135deg, rgba(255,214,224,0.8), rgba(232,213,255,0.8));
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    transition: opacity 0.8s ease;
-  }
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scaleX(-1);
+    }
 
-  #calendar-card {
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 
-      0 12px 40px rgba(255, 133, 161, 0.4),
-      inset 0 2px 0 rgba(255, 255, 255, 0.8),
-      inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    position: relative;
-    transform-style: preserve-3d;
-    transform: perspective(1000px) rotateX(5deg);
-    max-width: 90vw;
-  }
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(-1);
+    }
 
-  #calendar-card h2 {
-    font-family: 'Fredoka One', cursive;
-    color: var(--pink-deep);
-    text-align: center;
-    margin-bottom: 16px;
-    font-size: 1.8rem;
-    text-shadow: 2px 2px 0 white;
-  }
+    /* Cat overlay panel */
+    #cat-panel {
+      width: 280px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
 
-  #cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    text-align: center;
-  }
+    /* Reaction bubble */
+    #reaction-bubble {
+      background: white;
+      border-radius: 20px;
+      border: 3px solid var(--pink);
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(255, 133, 161, 0.3);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
 
-  .cal-day-name { font-weight: 900; color: var(--pink-deep); font-size: 0.8rem; opacity: 0.8; }
-  
-  .cal-day {
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.5);
-    border-radius: 10px;
-    font-weight: 700;
-    color: var(--dark);
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    border: 1px solid rgba(255,255,255,0.4);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
+    #reaction-bubble::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 10px solid transparent;
+      border-right-color: var(--pink);
+    }
 
-  .cal-day.tapped {
-    animation: tapPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    background: var(--pink-light);
-    color: white;
-    z-index: 5;
-  }
-  @keyframes tapPop {
-    0% { transform: scale(1); }
-    30% { transform: scale(0.7) translateY(4px); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
-    100% { transform: scale(1.4) translateY(-4px); box-shadow: 0 6px 15px rgba(255,133,161,0.4); }
-  }
+    #reaction-bubble::after {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 8px solid transparent;
+      border-right-color: white;
+    }
 
-  .cal-day.tapped-aggro {
-    animation: tapAggro 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
-    background: var(--pink-deep);
-    color: var(--yellow);
-    z-index: 5;
-  }
-  @keyframes tapAggro {
-    0% { transform: scale(0.9) rotate(-10deg); box-shadow: inset 0 3px 6px rgba(0,0,0,0.4); }
-    100% { transform: scale(1.6) rotate(15deg); box-shadow: 0 8px 25px rgba(255,133,161,0.7); }
-  }
+    .cat-emoji-big {
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 6px;
+      animation: catBounce 0.6s ease;
+      /* 3D layered shadow effect */
+      filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 12px rgba(255, 133, 161, 0.35));
+      text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.12),
+        4px 4px 0 rgba(0, 0, 0, 0.07),
+        0 6px 20px rgba(255, 133, 161, 0.4);
+      transform-style: preserve-3d;
+    }
 
-  .cal-day.glow {
-    background: var(--yellow) !important;
-    color: var(--pink-deep);
-    border-color: white;
-    transform: scale(1.15) !important;
-    box-shadow: 0 0 20px rgba(255,217,61,0.8), inset 0 0 10px white !important;
-    z-index: 10;
-  }
+    .cat-img-big {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid var(--pink-light);
+      margin-bottom: 6px;
+      /* Slower pop animation */
+      animation: imgPop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow:
+        0 8px 32px rgba(255, 133, 161, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      display: none;
+      flex-shrink: 0;
+    }
 
-  /* The sneaky paw */
-  #intro-paw {
-    position: absolute;
-    width: 65px; height: auto;
-    bottom: -100px; right: -20px;
-    z-index: 50;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: center center;
-    pointer-events: none;
-    transform: translate(var(--paw-x, 0px), var(--paw-y, 0px));
-  }
+    @keyframes catBounce {
+      0% {
+        transform: scale(0) rotate(-35deg);
+      }
 
-  .paw-strike { animation: pawStrike 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate 2; }
-  @keyframes pawStrike {
-    0% { transform: translate(var(--paw-x, 0px), var(--paw-y, 0px)) scale(1); }
-    100% { transform: translate(var(--paw-x, 0px), calc(var(--paw-y, 0px) + 15px)) scale(0.9) rotate(-5deg); filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
-  }
+      40% {
+        transform: scale(1.6) rotate(15deg);
+      }
 
-  /* Birthday Text Reveal */
-  #miao-glass-banner {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(-5deg);
-    background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 2px solid rgba(255,255,255,0.8);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5);
-    padding: 10px 40px;
-    border-radius: 50px;
-    z-index: 60;
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-  }
-  
-  #miao-neon-text {
-    font-family: 'Caveat', cursive;
-    font-size: 3.8rem;
-    color: var(--pink-deep);
-    text-shadow: 2px 2px 0 white, 0 0 15px rgba(255,133,161,0.6);
-    white-space: nowrap;
-    line-height: 1;
-    /* Smooth Apple-like reveal mask */
-    clip-path: inset(0 100% 0 0);
-  }
-  
-  #miao-neon-text.show {
-    animation: sweepText 3s cubic-bezier(0.42, 0, 0.17, 1) forwards;
-  }
-  
-  @keyframes sweepText {
-    0% { clip-path: inset(0 100% 0 0); }
-    100% { clip-path: inset(0 0 0 0); }
-  }
+      70% {
+        transform: scale(0.85) rotate(-5deg);
+      }
 
-  /* Tap to Start Button */
-  #start-btn {
-    margin-top: 30px;
-    background: linear-gradient(135deg, var(--pink-deep), #FF6B9D);
-    color: white;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.5rem;
-    padding: 16px 40px;
-    border: 3px solid white;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(224,84,122,0.5);
-    opacity: 0; transform: translateY(20px) scale(0.8);
-    transition: all 0.3s;
-    pointer-events: none;
-  }
-  
-  #start-btn.show {
-    opacity: 1; transform: translateY(0) scale(1);
-    pointer-events: auto;
-    animation: pulseBtn 2s infinite 1s;
-  }
-  
-  @keyframes pulseBtn {
-    0% { box-shadow: 0 8px 24px rgba(224,84,122,0.5), 0 0 0 0 rgba(224,84,122,0.4); }
-    70% { box-shadow: 0 8px 24px rgba(224,84,122,0.5), 0 0 0 15px rgba(224,84,122,0); }
-    100% { box-shadow: 0 8px 24px rgba(224,84,122,0.5), 0 0 0 0 rgba(224,84,122,0); }
-  }
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
 
-</style>
+    /* Zoom-out pop: starts very oversized and snaps to real size powerfully */
+    @keyframes imgPop {
+      0% {
+        transform: scale(3.5) rotate(-20deg);
+        opacity: 0;
+        filter: contrast(1.5) brightness(1.2);
+      }
+
+      35% {
+        opacity: 1;
+        transform: scale(1.8) rotate(10deg);
+        filter: contrast(1.2) brightness(1.1);
+      }
+
+      65% {
+        transform: scale(0.85) rotate(-5deg);
+      }
+
+      85% {
+        transform: scale(1.1) rotate(3deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+        filter: none;
+      }
+    }
+
+    .reaction-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: var(--pink-deep);
+    }
+
+    .reaction-text {
+      font-size: 0.8rem;
+      color: var(--dark);
+      opacity: 0.7;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* Gesture guide */
+    .gesture-guide {
+      background: white;
+      border-radius: 18px;
+      border: 2px solid var(--pink-light);
+      padding: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .gesture-guide h3 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink-deep);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .gesture-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 6px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 0.75rem;
+    }
+
+    .gesture-item:hover {
+      background: var(--pink-light);
+    }
+
+    .gesture-icon {
+      font-size: 1.3rem;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .gesture-label {
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    .gesture-desc {
+      color: #888;
+      font-size: 0.65rem;
+    }
+
+    .gesture-active {
+      background: linear-gradient(90deg, var(--pink-light), #fff0f5) !important;
+      border: 1.5px solid var(--pink);
+    }
+
+    /* Birthday banner */
+    .bday-banner {
+      background: linear-gradient(135deg, var(--yellow), var(--peach));
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+      border: 2px solid white;
+      box-shadow: 0 4px 16px rgba(255, 180, 70, 0.4);
+    }
+
+    .bday-banner p {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.9rem;
+      color: white;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+      line-height: 1.4;
+    }
+
+    /* Confetti explosion */
+    #confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .conf {
+      position: absolute;
+      border-radius: 50%;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Status badge */
+    #status-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.65);
+      color: white;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      transition: all 0.3s;
+    }
+
+    /* Hand skeleton colors */
+    .paw-detected {
+      border-color: var(--yellow) !important;
+      box-shadow: 0 0 24px rgba(255, 217, 61, 0.5) !important;
+    }
+
+    /* Floating cat stickers on detection */
+    .cat-sticker {
+      position: fixed;
+      pointer-events: none;
+      z-index: 500;
+      font-size: 2.5rem;
+      /* Slowed down from 2.5s to 4s for visibility */
+      animation: stickerPop 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes stickerPop {
+      0% {
+        transform: scale(5) translateY(0);
+        opacity: 0;
+        filter: blur(4px);
+      }
+
+      15% {
+        transform: scale(4) rotate(15deg) translateY(0);
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      30% {
+        transform: scale(0.8) rotate(-10deg) translateY(0);
+        opacity: 1;
+      }
+
+      45% {
+        transform: scale(1.2) rotate(5deg) translateY(0);
+        opacity: 1;
+      }
+
+      60% {
+        transform: scale(1) rotate(0deg) translateY(0);
+        opacity: 1;
+      }
+
+      85% {
+        transform: scale(1) translateY(-100px);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: scale(0.9) translateY(-250px);
+        opacity: 0;
+      }
+    }
+
+    /* Paw print trail on canvas */
+    .paw-trail {
+      opacity: 0;
+    }
+
+    /* Loading screen */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #FFD6E0, #E8D5FF);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      gap: 16px;
+      transition: opacity 0.8s ease;
+    }
+
+    #loading h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: var(--pink-deep);
+    }
+
+    #loading p {
+      color: var(--dark);
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
+    .loading-cat {
+      font-size: 5rem;
+      animation: loadingBounce 1s ease infinite;
+    }
+
+    @keyframes loadingBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-5deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+    }
+
+    .loading-bar {
+      width: 200px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      background: var(--pink-deep);
+      border-radius: 4px;
+      animation: loadBar 2.5s ease forwards;
+    }
+
+    @keyframes loadBar {
+      0% {
+        width: 0;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+
+    /* === GLASSMORPHISM MOBILE REDESIGN === */
+    @media (max-width: 700px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 24px rgba(255, 133, 161, 0.15);
+        padding: 8px 14px;
+      }
+
+      .header h1 {
+        font-size: clamp(0.95rem, 4vw, 1.3rem);
+      }
+
+      .header p {
+        font-size: 0.68rem;
+      }
+
+      .main {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 58px;
+        gap: 10px;
+      }
+
+      #camera-wrap {
+        padding: 8px;
+      }
+
+      #camera-frame {
+        border-radius: 20px;
+        border: 3px solid rgba(255, 133, 161, 0.5);
+        box-shadow:
+          0 8px 32px rgba(255, 133, 161, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.3),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        aspect-ratio: 4/3;
+        max-height: 55vw;
+      }
+
+      /* Extra small screen calendar adjustment */
+      @media (max-width: 400px) {
+        #calendar-card {
+          padding: 16px 12px;
+          max-width: 95vw;
+        }
+
+        #cal-grid {
+          gap: 4px;
+        }
+
+        .cal-day {
+          border-radius: 6px;
+          font-size: 0.8rem;
+        }
+      }
+
+      /* Cat panel: vertical stack on mobile */
+      #cat-panel {
+        width: 100%;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: visible;
+        padding: 0 12px 16px;
+        gap: 10px;
+      }
+
+      /* Top row: reaction + birthday side by side */
+      #top-row-mobile {
+        display: flex !important;
+        flex-direction: row;
+        gap: 10px;
+        width: 100%;
+        align-items: stretch;
+      }
+
+      #reaction-bubble {
+        flex: 1;
+        min-width: 0;
+        min-height: 200px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 8px 32px rgba(255, 133, 161, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+      }
+
+      #reaction-bubble::before,
+      #reaction-bubble::after {
+        display: none;
+      }
+
+      .cat-img-big {
+        width: 110px;
+        height: 110px;
+      }
+
+      .cat-emoji-big {
+        font-size: 3.2rem;
+      }
+
+      /* Birthday banner: compact widget beside reaction */
+      .bday-banner {
+        width: 110px;
+        flex-shrink: 0;
+        padding: 10px 8px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(255, 217, 61, 0.9), rgba(255, 179, 71, 0.9));
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 8px 24px rgba(255, 180, 70, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+
+      .bday-banner p {
+        font-size: 0.72rem;
+      }
+
+      /* Gesture guide: full width below */
+      .gesture-guide {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        border-radius: 18px;
+      }
+
+      /* 2-column grid for gesture items */
+      .gesture-guide>.gesture-item {
+        width: calc(50% - 4px);
+        display: inline-flex;
+      }
+
+      .gesture-guide {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 10px;
+      }
+
+      .gesture-guide h3 {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      #status-badge {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+      }
+    }
+
+    /* === INTRO CALENDAR FLOW === */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 8000;
+      background: linear-gradient(135deg, rgba(255, 214, 224, 0.8), rgba(232, 213, 255, 0.8));
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+
+    #calendar-card {
+      background: rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow:
+        0 12px 40px rgba(255, 133, 161, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      position: relative;
+      transform-style: preserve-3d;
+      transform: perspective(1000px) rotateX(5deg);
+      max-width: 90vw;
+    }
+
+    #calendar-card h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink-deep);
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 1.8rem;
+      text-shadow: 2px 2px 0 white;
+    }
+
+    #cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .cal-day-name {
+      font-weight: 900;
+      color: var(--pink-deep);
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .cal-day {
+      width: 100%;
+      aspect-ratio: 1/1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .cal-day.tapped {
+      animation: tapPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      background: var(--pink-light);
+      color: white;
+      z-index: 5;
+    }
+
+    @keyframes tapPop {
+      0% {
+        transform: scale(1);
+      }
+
+      30% {
+        transform: scale(0.7) translateY(4px);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      100% {
+        transform: scale(1.4) translateY(-4px);
+        box-shadow: 0 6px 15px rgba(255, 133, 161, 0.4);
+      }
+    }
+
+    .cal-day.tapped-aggro {
+      animation: tapAggro 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
+      background: var(--pink-deep);
+      color: var(--yellow);
+      z-index: 5;
+    }
+
+    @keyframes tapAggro {
+      0% {
+        transform: scale(0.9) rotate(-10deg);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      100% {
+        transform: scale(1.6) rotate(15deg);
+        box-shadow: 0 8px 25px rgba(255, 133, 161, 0.7);
+      }
+    }
+
+    .cal-day.glow {
+      background: var(--yellow) !important;
+      color: var(--pink-deep);
+      border-color: white;
+      transform: scale(1.15) !important;
+      box-shadow: 0 0 20px rgba(255, 217, 61, 0.8), inset 0 0 10px white !important;
+      z-index: 10;
+    }
+
+    /* The sneaky paw */
+    #intro-paw {
+      position: absolute;
+      width: 48px;
+      height: auto;
+      bottom: -100px;
+      right: -20px;
+      z-index: 50;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center center;
+      pointer-events: none;
+      transform: translate(var(--paw-x, 0px), var(--paw-y, 0px));
+    }
+
+    .paw-strike {
+      animation: pawStrike 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) alternate 2;
+    }
+
+    @keyframes pawStrike {
+      0% {
+        transform: translate(var(--paw-x, 0px), var(--paw-y, 0px)) scale(1);
+      }
+
+      100% {
+        transform: translate(var(--paw-x, 0px), calc(var(--paw-y, 0px) + 15px)) scale(0.9) rotate(-5deg);
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+      }
+    }
+
+    /* Birthday Text Reveal */
+    #miao-glass-banner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-5deg);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.5);
+      padding: 10px 40px;
+      border-radius: 50px;
+      z-index: 60;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    #miao-neon-text {
+      font-family: 'Caveat', cursive;
+      font-size: 3.8rem;
+      color: var(--pink-deep);
+      text-shadow: 2px 2px 0 white, 0 0 15px rgba(255, 133, 161, 0.6);
+      white-space: nowrap;
+      line-height: 1;
+      /* Smooth Apple-like reveal mask */
+      clip-path: inset(0 100% 0 0);
+    }
+
+    #miao-neon-text.show {
+      animation: sweepText 3s cubic-bezier(0.42, 0, 0.17, 1) forwards;
+    }
+
+    @keyframes sweepText {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      100% {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    /* Tap to Start Button */
+    #start-btn {
+      margin-top: 30px;
+      background: linear-gradient(135deg, var(--pink-deep), #FF6B9D);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      padding: 16px 40px;
+      border: 3px solid white;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(224, 84, 122, 0.5);
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+
+    #start-btn.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      animation: pulseBtn 2s infinite 1s;
+    }
+
+    @keyframes pulseBtn {
+      0% {
+        box-shadow: 0 8px 24px rgba(224, 84, 122, 0.5), 0 0 0 0 rgba(224, 84, 122, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 8px 24px rgba(224, 84, 122, 0.5), 0 0 0 15px rgba(224, 84, 122, 0);
+      }
+
+      100% {
+        box-shadow: 0 8px 24px rgba(224, 84, 122, 0.5), 0 0 0 0 rgba(224, 84, 122, 0);
+      }
+    }
+
+    /* === AR MOMENT MODULE === */
+    #ar-trigger-btn {
+      background: rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      padding: 2px 10px;
+      margin: 4px;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: bold;
+      color: var(--pink-deep);
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      animation: pulseArBtn 3s infinite;
+      transition: all 0.3s;
+      backdrop-filter: blur(5px);
+    }
+
+    @keyframes pulseArBtn {
+
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(255, 133, 161, 0.2);
+      }
+
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(255, 133, 161, 0.6);
+      }
+    }
+
+    #ar-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9900;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.15);
+      /* Light dim */
+      opacity: 0;
+      transition: opacity 1s;
+      pointer-events: none;
+    }
+
+    #ar-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #ar-intro-text {
+      position: absolute;
+      top: 40%;
+      font-family: 'Numito', sans-serif;
+      font-size: 1.2rem;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 1.5s;
+      letter-spacing: 1px;
+    }
+
+    #ar-intro-text.show {
+      opacity: 1;
+    }
+
+    #ar-card {
+      position: absolute;
+      width: 220px;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
+      text-align: center;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
+    #ar-card.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    #ar-card.dissolve {
+      opacity: 0;
+      transform: scale(1.2) translateY(-20px);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    @keyframes floatCard {
+
+      0%,
+      100% {
+        margin-top: 0;
+      }
+
+      50% {
+        margin-top: -15px;
+      }
+    }
+
+    #ar-card h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+
+    #ar-card p {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    .ar-paw {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      opacity: 0;
+      transform-origin: center;
+      transition: opacity 1.5s, transform 1s;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.6));
+    }
+
+    #ar-end-cat {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+
+    #ar-end-cat.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: floatCat 3s ease-in-out infinite;
+    }
+
+    .ar-cat-hint {
+      margin-top: -15px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      color: white;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+      opacity: 0.8;
+      white-space: nowrap;
+    }
+
+    @keyframes floatCat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    #ar-letter-card {
+      position: absolute;
+      width: 280px;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 133, 161, 0.2), rgba(166, 192, 254, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      text-align: left;
+      opacity: 0;
+      transform: perspective(600px) rotateX(-90deg) translateY(60px);
+      transform-origin: bottom center;
+      transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    #ar-letter-card.show {
+      opacity: 1;
+      transform: perspective(600px) rotateX(0deg) translateY(0);
+      pointer-events: auto;
+    }
+
+    .ar-letter-content {
+      font-family: 'Nunito', sans-serif;
+      color: white;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .ar-letter-from {
+      font-family: 'Fredoka One', cursive;
+      color: var(--yellow);
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .ar-letter-close {
+      display: block;
+      margin: 30px auto 0;
+      background: rgba(255, 255, 255, 0.3);
+      border: 2px solid white;
+      border-radius: 20px;
+      padding: 8px 30px;
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 0;
+    }
+
+    .ar-letter-close:hover {
+      background: white;
+      color: var(--pink-deep);
+    }
+
+    #ar-conclusion {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: opacity 2s;
+      text-align: center;
+    }
+
+    #ar-btn-close {
+      position: absolute;
+      bottom: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+      border-radius: 20px;
+      padding: 8px 25px;
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      font-family: 'Fredoka One', cursive;
+      opacity: 0;
+      transition: opacity 1s;
+      pointer-events: none;
+    }
+
+    #ar-btn-close:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* === RANDOM THOUGHTS MODULE === */
+    #thought-dice-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      height: 120px;
+      justify-content: center;
+    }
+
+    #dice-emoji {
+      font-size: 5rem;
+      line-height: 1;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #dice-emoji.rolling {
+      animation: diceRoll 0.15s linear infinite;
+      filter: blur(3px);
+    }
+
+    #dice-emoji.stopped {
+      animation: diceBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: blur(0);
+    }
+
+    @keyframes diceRoll {
+      0% {
+        transform: rotate(0deg) scale(1.1);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(0.9);
+      }
+    }
+
+    @keyframes diceBounce {
+      0% {
+        transform: scale(0.5) translateY(-30px) rotate(-30deg);
+      }
+
+      50% {
+        transform: scale(1.3) translateY(10px) rotate(15deg);
+      }
+
+      100% {
+        transform: scale(1) translateY(0) rotate(0deg);
+      }
+    }
+
+    .dice-grad-1 {
+      background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(161, 140, 209, 0.8));
+    }
+
+    .dice-grad-2 {
+      background: linear-gradient(45deg, #f6d365, #fda085);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(246, 211, 101, 0.8));
+    }
+
+    .dice-grad-3 {
+      background: linear-gradient(45deg, #a6c0fe, #f68084);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(166, 192, 254, 0.8));
+    }
+
+    .dice-grad-4 {
+      background: linear-gradient(45deg, #84fab0, #8fd3f4);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(132, 250, 176, 0.8));
+    }
+
+    .dice-grad-5 {
+      background: linear-gradient(45deg, #ff9a9e, #fecfef);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 15px rgba(255, 154, 158, 0.8));
+    }
+
+    .dice-grad-6 {
+      background: linear-gradient(45deg, #ff0844, #ffb199);
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.9));
+      animation: rareGradient 1.5s infinite;
+    }
+
+    @keyframes rareGradient {
+      0% {
+        filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.9)) hue-rotate(0deg);
+      }
+
+      100% {
+        filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.9)) hue-rotate(360deg);
+      }
+    }
+
+    .thought-sig {
+      font-size: 1.1rem;
+      color: #999;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      display: block;
+      margin-top: 15px;
+      text-align: right;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #dice-guide-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      z-index: 10000;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.3s;
+      font-family: 'Fredoka One', cursive;
+      color: var(--pink-deep);
+      text-align: left;
+      margin: 0;
+    }
+
+    #dice-guide-modal.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    #dice-guide-modal ul {
+      list-style: none;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+    }
+
+    #dice-guide-modal p {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #888;
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    #thought-system-text {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--pink-deep);
+      margin-top: 15px;
+      height: 25px;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0px white;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    #thought-system-text.show {
+      opacity: 1;
+    }
+
+    .sys-grad-1 {
+      color: #a18cd1 !important;
+    }
+
+    .sys-grad-2 {
+      color: #f6d365 !important;
+    }
+
+    .sys-grad-3 {
+      color: #a6c0fe !important;
+    }
+
+    .sys-grad-4 {
+      color: #84fab0 !important;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .sys-grad-5 {
+      color: #ff9a9e !important;
+    }
+
+    .sys-grad-6 {
+      color: #ff0844 !important;
+      text-shadow: 1px 1px 5px rgba(255, 8, 68, 0.5) !important;
+    }
+
+    #dice-hint-text {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    #dice-hint-text.show {
+      opacity: 1;
+    }
+
+    #btn-thought-open {
+      width: 100%;
+      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid white;
+      border-radius: 20px;
+      padding: 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--pink-deep);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #btn-thought-open:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #thoughts-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(255, 240, 245, 0.9);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 0.4s ease;
+    }
+
+    #btn-thought-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      font-size: 2.5rem;
+      color: var(--pink-deep);
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    #btn-thought-close:hover {
+      opacity: 1;
+    }
+
+    #thought-cat-img-box {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 10px 30px rgba(255, 133, 161, 0.4);
+      overflow: hidden;
+      margin-bottom: 40px;
+      background: var(--pink-light);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #thought-cat-img-box.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    #thought-cat-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #thought-text-container {
+      width: 100%;
+      max-width: 500px;
+      min-height: 120px;
+      text-align: center;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--dark);
+      line-height: 1.6;
+      margin-bottom: 50px;
+    }
+
+    .typecursor::after {
+      content: '|';
+      animation: blink 1s step-end infinite;
+      color: var(--pink-deep);
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    #btn-another-thought {
+      background: transparent;
+      border: 2px solid var(--pink-deep);
+      color: var(--pink-deep);
+      border-radius: 20px;
+      padding: 8px 25px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s;
+    }
+
+    #btn-another-thought.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #btn-another-thought:hover {
+      background: var(--pink-deep);
+      color: white;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Loading Screen -->
-<div id="loading">
-  <div class="loading-cat">🐱</div>
-  <h2>Miao's Birthday Surprise!</h2>
-  <p style="margin-bottom: 25px; font-weight: 700; color: var(--pink-deep); text-shadow: 1px 1px 0 white;">Make sure your sound is ON! 🔊</p>
-  <button id="open-surprise-btn" style="background: linear-gradient(135deg, var(--pink-deep), #FF6B9D); color: white; padding: 16px 36px; border-radius: 30px; border: 3px solid white; font-family: 'Fredoka One', cursive; font-size: 1.3rem; cursor: pointer; box-shadow: 0 6px 20px rgba(255,133,161,0.5); transition: all 0.2s;">Open Present 🎁</button>
-</div>
-
-<!-- Intro Calendar Sequence -->
-<div id="intro-overlay" style="display:none;">
-  <div id="calendar-card">
-    <h2>April</h2>
-    <div id="cal-grid">
-      <div class="cal-day-name">S</div><div class="cal-day-name">M</div><div class="cal-day-name">T</div>
-      <div class="cal-day-name">W</div><div class="cal-day-name">T</div><div class="cal-day-name">F</div><div class="cal-day-name">S</div>
-      <!-- empty cells for offset -->
-      <div></div><div></div><div></div>
-      <!-- Days 1-4 -->
-      <div class="cal-day" id="day-1">1</div>
-      <div class="cal-day" id="day-2">2</div>
-      <div class="cal-day" id="day-3">3</div>
-      <div class="cal-day" id="day-4">4</div>
-      <!-- Days 5-30 generic -->
-      <div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
-      <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div>
-      <div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day">15</div>
-      <div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div>
-      <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div>
-      <div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
-      <div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div>
-    </div>
-
-    <!-- The Paw -->
-    <img id="intro-paw" src="https://static.vecteezy.com/system/resources/previews/017/805/899/non_2x/3d-illustration-of-paw-prints-free-png.png" alt="Paw">
-
-    <!-- Birthday Text Reveal -->
-    <div id="miao-glass-banner">
-      <div id="miao-neon-text">Miao's Birthday!! 🎈</div>
-    </div>
+  <!-- Loading Screen -->
+  <div id="loading">
+    <div class="loading-cat">🐱</div>
+    <h2>Miao's Birthday Surprise!</h2>
+    <p style="margin-bottom: 25px; font-weight: 700; color: var(--pink-deep); text-shadow: 1px 1px 0 white;">Make sure
+      your sound is ON! 🔊</p>
+    <button id="open-surprise-btn"
+      style="background: linear-gradient(135deg, var(--pink-deep), #FF6B9D); color: white; padding: 16px 36px; border-radius: 30px; border: 3px solid white; font-family: 'Fredoka One', cursive; font-size: 1.3rem; cursor: pointer; box-shadow: 0 6px 20px rgba(255,133,161,0.5); transition: all 0.2s;">Open
+      Present 🎁</button>
   </div>
 
-  <button id="start-btn">Tap to Start 🐾</button>
-</div>
-
-<!-- Floating background hearts -->
-<div class="bg-hearts" id="bg-hearts"></div>
-
-<!-- Confetti layer -->
-<div id="confetti-container"></div>
-
-<!-- Header -->
-<div class="header">
-  <h1>🐾 Happy Birthday Lau Shan Miao! 🎂 4/4 🐾</h1>
-  <p>Show your hand gestures to wake up the cats! 🐱✨</p>
-</div>
-
-<!-- Main -->
-<div class="main">
-  <!-- Camera -->
-  <div id="camera-wrap">
-    <div id="camera-frame">
-      <video id="video" autoplay playsinline muted></video>
-      <canvas id="canvas"></canvas>
-      <div id="status-badge">🐾 Loading cats...</div>
-    </div>
-  </div>
-
-  <!-- Cat Panel -->
-  <div id="cat-panel">
-    <!-- Top row: reaction bubble + birthday banner side by side on mobile -->
-    <div id="top-row-mobile" style="display:contents">
-
-      <!-- Reaction bubble -->
-      <div id="reaction-bubble">
-        <img class="cat-img-big" id="cat-img" src="" alt="Cat reaction" onerror="this.style.display='none';document.getElementById('cat-emoji').style.display='block';">
-        <div class="cat-emoji-big" id="cat-emoji">🐱</div>
-        <div class="reaction-name" id="reaction-name">Waiting...</div>
-        <div class="reaction-text" id="reaction-text">Show your hand to<br>wake up the cats! 🐾</div>
+  <!-- Intro Calendar Sequence -->
+  <div id="intro-overlay" style="display:none;">
+    <div id="calendar-card">
+      <h2>April</h2>
+      <div id="cal-grid">
+        <div class="cal-day-name">S</div>
+        <div class="cal-day-name">M</div>
+        <div class="cal-day-name">T</div>
+        <div class="cal-day-name">W</div>
+        <div class="cal-day-name">T</div>
+        <div class="cal-day-name">F</div>
+        <div class="cal-day-name">S</div>
+        <!-- empty cells for offset -->
+        <div></div>
+        <div></div>
+        <div></div>
+        <!-- Days 1-4 -->
+        <div class="cal-day" id="day-1">1</div>
+        <div class="cal-day" id="day-2">2</div>
+        <div class="cal-day" id="day-3">3</div>
+        <div class="cal-day" id="day-4">4</div>
+        <!-- Days 5-30 generic -->
+        <div class="cal-day">5</div>
+        <div class="cal-day">6</div>
+        <div class="cal-day">7</div>
+        <div class="cal-day">8</div>
+        <div class="cal-day">9</div>
+        <div class="cal-day">10</div>
+        <div class="cal-day">11</div>
+        <div class="cal-day">12</div>
+        <div class="cal-day">13</div>
+        <div class="cal-day">14</div>
+        <div class="cal-day">15</div>
+        <div class="cal-day">16</div>
+        <div class="cal-day">17</div>
+        <div class="cal-day">18</div>
+        <div class="cal-day">19</div>
+        <div class="cal-day">20</div>
+        <div class="cal-day">21</div>
+        <div class="cal-day">22</div>
+        <div class="cal-day">23</div>
+        <div class="cal-day">24</div>
+        <div class="cal-day">25</div>
+        <div class="cal-day">26</div>
+        <div class="cal-day">27</div>
+        <div class="cal-day">28</div>
+        <div class="cal-day">29</div>
+        <div class="cal-day">30</div>
       </div>
 
-      <!-- Birthday banner -->
-      <div class="bday-banner">
-        <p>🎂 Happy Birthday<br>Lau Shan Miao!<br>🐱 4th April 🐱<br>Meow meow meow! 🐾</p>
+      <!-- The Paw -->
+      <img id="intro-paw"
+        src="https://static.vecteezy.com/system/resources/previews/017/805/899/non_2x/3d-illustration-of-paw-prints-free-png.png"
+        alt="Paw">
+
+      <!-- Birthday Text Reveal -->
+      <div id="miao-glass-banner">
+        <div id="miao-neon-text">Miao's Birthday!! 🎈</div>
+      </div>
+    </div>
+
+    <button id="start-btn">Tap to Start 🐾</button>
+  </div>
+
+  <!-- Floating background hearts -->
+  <div class="bg-hearts" id="bg-hearts"></div>
+
+  <!-- Confetti layer -->
+  <div id="confetti-container"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🐾 Happy Birthday Lau Shan Miao! 🎂 4/4 🐾</h1>
+    <p>Show your hand gestures to wake up the cats! 🐱✨</p>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Camera -->
+    <div id="camera-wrap">
+      <div id="camera-frame">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas"></canvas>
+        <div id="status-badge">🐾 Loading cats...</div>
+      </div>
+    </div>
+
+    <!-- Cat Panel -->
+    <div id="cat-panel">
+      <!-- Top row: reaction bubble + birthday banner side by side on mobile -->
+      <div id="top-row-mobile" style="display:contents">
+
+        <!-- Reaction bubble -->
+        <div id="reaction-bubble">
+          <img class="cat-img-big" id="cat-img" src="" alt="Cat reaction"
+            onerror="this.style.display='none';document.getElementById('cat-emoji').style.display='block';">
+          <div class="cat-emoji-big" id="cat-emoji">🐱</div>
+          <div class="reaction-name" id="reaction-name">Waiting...</div>
+          <div class="reaction-text" id="reaction-text">Show your hand to<br>wake up the cats! 🐾</div>
+        </div>
+
+        <!-- Birthday banner -->
+        <div class="bday-banner">
+          <p>🎂 Happy Birthday<br>Lau Shan Miao!<br><button id="ar-trigger-btn">4th April</button><br>Meow meow
+            meow! 🐾</p>
+        </div>
+
       </div>
 
-    </div>
+      <!-- Gesture guide -->
+      <div class="gesture-guide">
+        <h3>✨ Paw Gestures</h3>
+        <div class="gesture-item" id="g-yeah"><span class="gesture-icon">🤘</span>
+          <div>
+            <div class="gesture-label">Yeah / Rock</div>
+            <div class="gesture-desc">Index + pinky up</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-peace"><span class="gesture-icon">✌️</span>
+          <div>
+            <div class="gesture-label">Peace / Victory</div>
+            <div class="gesture-desc">Index + middle up</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-thumbs"><span class="gesture-icon">👍</span>
+          <div>
+            <div class="gesture-label">Thumbs Up</div>
+            <div class="gesture-desc">Just thumb raised</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-wave"><span class="gesture-icon">🖐️</span>
+          <div>
+            <div class="gesture-label">Open Hand</div>
+            <div class="gesture-desc">All fingers open</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-heart"><span class="gesture-icon">🤏</span>
+          <div>
+            <div class="gesture-label">Pinch / Heart</div>
+            <div class="gesture-desc">Thumb + index close</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-point"><span class="gesture-icon">👆</span>
+          <div>
+            <div class="gesture-label">Point Up</div>
+            <div class="gesture-desc">Only index up</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-ok"><span class="gesture-icon">👌</span>
+          <div>
+            <div class="gesture-label">OK Sign</div>
+            <div class="gesture-desc">Thumb + index ring</div>
+          </div>
+        </div>
+        <div class="gesture-item" id="g-fist"><span class="gesture-icon">✊</span>
+          <div>
+            <div class="gesture-label">Fist / Power</div>
+            <div class="gesture-desc">All fingers closed</div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Gesture guide -->
-    <div class="gesture-guide">
-      <h3>✨ Paw Gestures</h3>
-      <div class="gesture-item" id="g-yeah"><span class="gesture-icon">🤘</span><div><div class="gesture-label">Yeah / Rock</div><div class="gesture-desc">Index + pinky up</div></div></div>
-      <div class="gesture-item" id="g-peace"><span class="gesture-icon">✌️</span><div><div class="gesture-label">Peace / Victory</div><div class="gesture-desc">Index + middle up</div></div></div>
-      <div class="gesture-item" id="g-thumbs"><span class="gesture-icon">👍</span><div><div class="gesture-label">Thumbs Up</div><div class="gesture-desc">Just thumb raised</div></div></div>
-      <div class="gesture-item" id="g-wave"><span class="gesture-icon">🖐️</span><div><div class="gesture-label">Open Hand</div><div class="gesture-desc">All fingers open</div></div></div>
-      <div class="gesture-item" id="g-heart"><span class="gesture-icon">🤏</span><div><div class="gesture-label">Pinch / Heart</div><div class="gesture-desc">Thumb + index close</div></div></div>
-      <div class="gesture-item" id="g-point"><span class="gesture-icon">👆</span><div><div class="gesture-label">Point Up</div><div class="gesture-desc">Only index up</div></div></div>
-      <div class="gesture-item" id="g-ok"><span class="gesture-icon">👌</span><div><div class="gesture-label">OK Sign</div><div class="gesture-desc">Thumb + index ring</div></div></div>
-      <div class="gesture-item" id="g-fist"><span class="gesture-icon">✊</span><div><div class="gesture-label">Fist / Power</div><div class="gesture-desc">All fingers closed</div></div></div>
+      <!-- Trigger Button -->
+      <button id="btn-thought-open">give me a random thought 🧠</button>
     </div>
   </div>
-</div>
 
-<!-- MediaPipe -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1640029074/camera_utils.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1620248257/drawing_utils.js"></script>
+  <!-- AR Overlay Module -->
+  <div id="ar-overlay" style="display:none;">
+    <div id="ar-intro-text">look around a bit 👀</div>
+    <div id="ar-card">
+      <h3>happy 4/4, miao.</h3>
+      <p>tap me</p>
+    </div>
+    <div id="ar-end-cat">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100px; height:100px;">
+        <path d="M30,85 C30,55 70,55 70,85 Z" fill="rgba(255,255,255,0.9)" />
+        <circle cx="50" cy="45" r="22" fill="rgba(255,255,255,0.9)" />
+        <path d="M32,32 L28,10 L45,26 Z M68,32 L72,10 L55,26 Z" fill="rgba(255,255,255,0.9)" />
+        <circle cx="42" cy="45" r="3" fill="#333" />
+        <circle cx="58" cy="45" r="3" fill="#333" />
+        <path d="M50,52 Q47,55 44,52" stroke="#333" stroke-width="1.5" fill="none" />
+        <path d="M50,52 Q53,55 56,52" stroke="#333" stroke-width="1.5" fill="none" />
+        <rect x="38" y="60" width="24" height="16" fill="#FFB347" rx="2" />
+        <path d="M38,60 L50,68 L62,60" stroke="#FFD8A8" stroke-width="2" fill="none" />
+        <path d="M70,80 Q95,80 85,60" stroke="rgba(255,255,255,0.9)" stroke-width="6" fill="none"
+          stroke-linecap="round" />
+      </svg>
+      <div class="ar-cat-hint">tap to open ✉️</div>
+    </div>
 
-<script>
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const statusBadge = document.getElementById('status-badge');
-const catEmoji = document.getElementById('cat-emoji');
-const reactionName = document.getElementById('reaction-name');
-const reactionText = document.getElementById('reaction-text');
-const confettiContainer = document.getElementById('confetti-container');
+    <div id="ar-letter-card">
+      <div class="ar-letter-from" id="ar-letter-from">Hanz:</div>
+      <div class="ar-letter-content" id="ar-letter-text"></div>
+      <button class="ar-letter-close" id="ar-btn-letter-close">close</button>
+    </div>
 
-// === GESTURE DEFINITIONS ===
-const GESTURES = {
-  yeah: {
-    id: 'g-yeah',
-    emoji: '😸',
-    img: 'https://thumbs.dreamstime.com/b/cat-doing-victory-hand-sign-funny-ai-generative-illustration-280019951.jpg',
-    name: 'YEAH! Rock On! 🤘',
-    text: 'Miao is rocking out!\nHappy Birthday Shan Miao!',
-    cats: ['😸','🎸','🤘','🎉','⭐'],
-    color: '#FF6B9D',
-    confetti: true,
-    sounds: ['yeah','rock']
-  },
-  peace: {
-    id: 'g-peace',
-    emoji: '😺',
-    img: 'https://thumbs.dreamstime.com/b/cat-doing-victory-hand-sign-funny-ai-generative-illustration-280019951.jpg',
-    name: 'Peace & Birthday! ✌️',
-    text: 'Wishing you purr-fect peace\nand joy, Shan Miao! 🌟',
-    cats: ['😺','✌️','🌸','💕','🎂'],
-    color: '#C9B1FF',
-    confetti: true,
-    sounds: ['peace']
-  },
-  thumbsup: {
-    id: 'g-thumbs',
-    emoji: '😻',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfEQnU_6XKjms1sDTu_iCJ43yML7a1o9HPuw&s',
-    name: 'Paw-some! 👍',
-    text: 'You are AMAZING\nShan Miao! 🐾💖',
-    cats: ['😻','👍','⭐','💖','🐾'],
-    color: '#FFB347',
-    confetti: false,
-    sounds: ['good']
-  },
-  wave: {
-    id: 'g-wave',
-    emoji: '🙀',
-    img: 'https://i.pinimg.com/236x/53/51/10/535110a7c62e6803addf9a16f573c6f8.jpg',
-    name: 'MIAO WAVE! 🖐️',
-    text: 'Shan Miao says HELLO!\nHappy Birthday! 🎈',
-    cats: ['🙀','🖐️','🎈','🌈','🎊'],
-    color: '#51CF66',
-    confetti: true,
-    sounds: ['wave']
-  },
-  heart: {
-    id: 'g-heart',
-    emoji: '😽',
-    img: 'https://img.freepik.com/premium-photo/cat-making-heart-with-hands_1239481-770.jpg',
-    name: 'Cat Kisses! 💕',
-    text: 'Sending all the love\nto Shan Miao! 💖',
-    cats: ['😽','💕','💖','💗','💝'],
-    color: '#FF85A1',
-    confetti: true,
-    sounds: ['love']
-  },
-  point: {
-    id: 'g-point',
-    emoji: '🐱',
-    img: 'https://i.pinimg.com/236x/1c/e4/1c/1ce41cf0eabdd8ac1e3b530ccfd80380.jpg',
-    name: 'Pointing! ☝️',
-    text: 'Shan Miao, YOU are the\nbirthday star! ⭐',
-    cats: ['🐱','☝️','⭐','🌟','✨'],
-    color: '#66D9E8',
-    confetti: false,
-    sounds: ['point']
-  },
-  ok: {
-    id: 'g-ok',
-    emoji: '😸',
-    img: 'https://i.pinimg.com/564x/90/2a/08/902a08da6a1df9105e6e40ef6fa8cc8a.jpg',
-    name: 'Purr-fect! 👌',
-    text: 'Everything is purr-fect\nfor Shan Miao! 🐾',
-    cats: ['😸','👌','💯','🌸','🎉'],
-    color: '#FFD93D',
-    confetti: false,
-    sounds: ['ok']
-  },
-  fist: {
-    id: 'g-fist',
-    emoji: '🐯',
-    img: 'https://i1.sndcdn.com/artworks-000135350979-6zknol-t500x500.jpg',
-    name: 'Cat POWER! ✊',
-    text: 'Roar! Shan Miao is\nstrong and amazing! 🔥',
-    cats: ['🐯','✊','💪','🔥','⚡'],
-    color: '#FF6348',
-    confetti: true,
-    sounds: ['power']
-  }
-};
+    <div id="ar-conclusion">happy birthday, miao.</div>
+    <button id="ar-btn-close">return</button>
+  </div>
 
-// === REALISTIC CAT AUDIO ENGINE ===
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx;
+  <!-- Random Thoughts Modal -->
+  <div id="thoughts-modal" style="display:none;">
+    <button id="btn-thought-close">✕</button>
 
-function initAudio() {
-  if (!audioCtx) audioCtx = new AudioCtx();
-}
+    <div id="thought-dice-container">
+      <div id="dice-emoji">🎲</div>
+      <div id="thought-system-text"></div>
+      <div id="dice-hint-text">long tap dice to know more...</div>
+    </div>
 
-// Core cat formant synthesizer
-function catFormant(startFreq, endFreq, duration, vol = 0.18, startTime = 0) {
-  if (!audioCtx) return;
-  const t = audioCtx.currentTime + startTime;
+    <div id="thought-cat-img-box" style="display:none;">
+      <img id="thought-cat-img" src="" alt="Thought Cat">
+    </div>
+    <div id="thought-text-container">
+      <span id="thought-text"></span>
+    </div>
+    <button id="btn-another-thought">another one?</button>
 
-  // Main tone: sawtooth (cat vocal quality)
-  const osc = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
+    <div id="dice-guide-modal">
+      <ul>
+        <li>⚀ - 哲学猫 (Philosophy)</li>
+        <li>⚁ - 逻辑猫 (Cat Logic)</li>
+        <li>⚂ - 荒谬猫 (Absurdity)</li>
+        <li>⚃ - 观察猫 (Observation)</li>
+        <li>⚄ - 专属猫 (Connection)</li>
+        <li>⚅ - 隐藏猫 (Rare)</li>
+      </ul>
+      <p>... release to close ...</p>
+    </div>
+  </div>
 
-  // Formant filter 1 (mouth shape)
-  const f1 = audioCtx.createBiquadFilter();
-  f1.type = 'bandpass';
-  f1.frequency.value = 900;
-  f1.Q.value = 5;
+  <!-- MediaPipe -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1640029074/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1620248257/drawing_utils.js"></script>
 
-  // Formant filter 2 (throat resonance)
-  const f2 = audioCtx.createBiquadFilter();
-  f2.type = 'bandpass';
-  f2.frequency.value = 1800;
-  f2.Q.value = 8;
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const statusBadge = document.getElementById('status-badge');
+    const catEmoji = document.getElementById('cat-emoji');
+    const reactionName = document.getElementById('reaction-name');
+    const reactionText = document.getElementById('reaction-text');
+    const confettiContainer = document.getElementById('confetti-container');
 
-  // Subtle tremolo for natural cat warble
-  const tremolo = audioCtx.createOscillator();
-  const tremoloGain = audioCtx.createGain();
-  tremolo.frequency.value = 7 + Math.random() * 4;
-  tremoloGain.gain.value = startFreq * 0.05;
-  tremolo.connect(tremoloGain);
-  tremoloGain.connect(osc.frequency);
+    // === GESTURE DEFINITIONS ===
+    const GESTURES = {
+      yeah: {
+        id: 'g-yeah',
+        emoji: '😸',
+        img: 'https://thumbs.dreamstime.com/b/cat-doing-victory-hand-sign-funny-ai-generative-illustration-280019951.jpg',
+        name: 'YEAH! Rock On! 🤘',
+        text: 'Miao is rocking out!\nHappy Birthday Shan Miao!',
+        cats: ['😸', '🎸', '🤘', '🎉', '⭐'],
+        color: '#FF6B9D',
+        confetti: true,
+        sounds: ['yeah', 'rock']
+      },
+      peace: {
+        id: 'g-peace',
+        emoji: '😺',
+        img: 'https://thumbs.dreamstime.com/b/cat-doing-victory-hand-sign-funny-ai-generative-illustration-280019951.jpg',
+        name: 'Peace & Birthday! ✌️',
+        text: 'Wishing you purr-fect peace\nand joy, Shan Miao! 🌟',
+        cats: ['😺', '✌️', '🌸', '💕', '🎂'],
+        color: '#C9B1FF',
+        confetti: true,
+        sounds: ['peace']
+      },
+      thumbsup: {
+        id: 'g-thumbs',
+        emoji: '😻',
+        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfEQnU_6XKjms1sDTu_iCJ43yML7a1o9HPuw&s',
+        name: 'Paw-some! 👍',
+        text: 'You are AMAZING\nShan Miao! 🐾💖',
+        cats: ['😻', '👍', '⭐', '💖', '🐾'],
+        color: '#FFB347',
+        confetti: false,
+        sounds: ['good']
+      },
+      wave: {
+        id: 'g-wave',
+        emoji: '🙀',
+        img: 'https://i.pinimg.com/236x/53/51/10/535110a7c62e6803addf9a16f573c6f8.jpg',
+        name: 'MIAO WAVE! 🖐️',
+        text: 'Shan Miao says HELLO!\nHappy Birthday! 🎈',
+        cats: ['🙀', '🖐️', '🎈', '🌈', '🎊'],
+        color: '#51CF66',
+        confetti: true,
+        sounds: ['wave']
+      },
+      heart: {
+        id: 'g-heart',
+        emoji: '😽',
+        img: 'https://img.freepik.com/premium-photo/cat-making-heart-with-hands_1239481-770.jpg',
+        name: 'Cat Kisses! 💕',
+        text: 'Sending all the love\nto Shan Miao! 💖',
+        cats: ['😽', '💕', '💖', '💗', '💝'],
+        color: '#FF85A1',
+        confetti: true,
+        sounds: ['love']
+      },
+      point: {
+        id: 'g-point',
+        emoji: '🐱',
+        img: 'https://i.pinimg.com/236x/1c/e4/1c/1ce41cf0eabdd8ac1e3b530ccfd80380.jpg',
+        name: 'Pointing! ☝️',
+        text: 'Shan Miao, YOU are the\nbirthday star! ⭐',
+        cats: ['🐱', '☝️', '⭐', '🌟', '✨'],
+        color: '#66D9E8',
+        confetti: false,
+        sounds: ['point']
+      },
+      ok: {
+        id: 'g-ok',
+        emoji: '😸',
+        img: 'https://i.pinimg.com/564x/90/2a/08/902a08da6a1df9105e6e40ef6fa8cc8a.jpg',
+        name: 'Purr-fect! 👌',
+        text: 'Everything is purr-fect\nfor Shan Miao! 🐾',
+        cats: ['😸', '👌', '💯', '🌸', '🎉'],
+        color: '#FFD93D',
+        confetti: false,
+        sounds: ['ok']
+      },
+      fist: {
+        id: 'g-fist',
+        emoji: '🐯',
+        img: 'https://i1.sndcdn.com/artworks-000135350979-6zknol-t500x500.jpg',
+        name: 'Cat POWER! ✊',
+        text: 'Roar! Shan Miao is\nstrong and amazing! 🔥',
+        cats: ['🐯', '✊', '💪', '🔥', '⚡'],
+        color: '#FF6348',
+        confetti: true,
+        sounds: ['power']
+      }
+    };
 
-  osc.type = 'sawtooth';
-  osc.frequency.setValueAtTime(startFreq, t);
-  osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration * 0.6);
-  osc.frequency.exponentialRampToValueAtTime(endFreq * 0.85, t + duration);
+    // === REALISTIC CAT AUDIO ENGINE ===
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
 
-  // ADSR envelope
-  gainNode.gain.setValueAtTime(0, t);
-  gainNode.gain.linearRampToValueAtTime(vol, t + 0.04);
-  gainNode.gain.setValueAtTime(vol, t + duration * 0.5);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, t + duration);
-
-  osc.connect(f1); f1.connect(gainNode);
-  osc.connect(f2); f2.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-
-  osc.start(t); osc.stop(t + duration + 0.05);
-  tremolo.start(t); tremolo.stop(t + duration + 0.05);
-}
-
-function playTone(freq, type='sine', duration=0.3, vol=0.3) {
-  if (!audioCtx) return;
-  try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(); osc.stop(audioCtx.currentTime + duration);
-  } catch (e) { console.warn('Audio locked'); }
-}
-
-function playMeow(variant = 0) {
-  if (!audioCtx) return;
-  // 3 realistic meow variants
-  const variants = [
-    // Short 'mew'
-    () => catFormant(650, 1100, 0.35, 0.2),
-    // Classic 'meow' with pitch glide
-    () => {
-      catFormant(700, 1200, 0.2, 0.18, 0);
-      catFormant(1100, 780, 0.25, 0.16, 0.18);
-    },
-    // Questioning 'mrrrow?'
-    () => {
-      catFormant(500, 750, 0.15, 0.14, 0);
-      catFormant(750, 1100, 0.25, 0.17, 0.12);
-      catFormant(1050, 900, 0.2, 0.14, 0.35);
+    function initAudio() {
+      if (!audioCtx) audioCtx = new AudioCtx();
     }
-  ];
-  variants[variant % variants.length]();
-}
 
-function playPurr() {
-  if (!audioCtx) return;
-  // Simulates real purr: low frequency buzz ~25Hz cycling
-  for (let i = 0; i < 16; i++) {
-    const t = audioCtx.currentTime + i * 0.045;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 350 + Math.random() * 100;
-    osc.type = 'sawtooth';
-    osc.frequency.value = 28 + Math.random() * 8;
-    gain.gain.setValueAtTime(0.12, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
-    osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(t); osc.stop(t + 0.05);
-  }
-}
+    // Core cat formant synthesizer
+    function catFormant(startFreq, endFreq, duration, vol = 0.18, startTime = 0) {
+      if (!audioCtx) return;
+      const t = audioCtx.currentTime + startTime;
 
-function playCatChirp() {
-  if (!audioCtx) return;
-  // Excited chitter sound cats make at birds
-  [0, 0.06, 0.12, 0.18, 0.24].forEach((delay, i) => {
-    const t = audioCtx.currentTime + delay;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(1200 + i * 60, t);
-    osc.frequency.exponentialRampToValueAtTime(800, t + 0.04);
-    gain.gain.setValueAtTime(0.12, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(t); osc.stop(t + 0.06);
-  });
-}
+      // Main tone: sawtooth (cat vocal quality)
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
 
-function playCatHiss() {
-  if (!audioCtx) return;
-  // White noise + filter for hiss effect
-  const bufferSize = audioCtx.sampleRate * 0.5;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-  const src = audioCtx.createBufferSource();
-  src.buffer = buffer;
-  const filter = audioCtx.createBiquadFilter();
-  filter.type = 'bandpass';
-  filter.frequency.value = 3000;
-  filter.Q.value = 0.5;
-  const gain = audioCtx.createGain();
-  gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-  src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-  src.start(); src.stop(audioCtx.currentTime + 0.5);
-}
+      // Formant filter 1 (mouth shape)
+      const f1 = audioCtx.createBiquadFilter();
+      f1.type = 'bandpass';
+      f1.frequency.value = 900;
+      f1.Q.value = 5;
 
-function playCelebration() {
-  if (!audioCtx) return;
-  // A happy cat "mew mew" melody
-  const pattern = [
-    [700, 900, 0.18], [900, 1200, 0.18], [1200, 950, 0.2],
-    [950, 1300, 0.18], [1300, 1050, 0.22]
-  ];
-  let offset = 0;
-  pattern.forEach(([s, e, dur]) => {
-    catFormant(s, e, dur, 0.16, offset);
-    offset += dur + 0.04;
-  });
-}
+      // Formant filter 2 (throat resonance)
+      const f2 = audioCtx.createBiquadFilter();
+      f2.type = 'bandpass';
+      f2.frequency.value = 1800;
+      f2.Q.value = 8;
 
-function playBirthday() {
-  if (!audioCtx) return;
-  // Happy Birthday as cat meows
-  const notes = [
-    [392,450],[392,450],[440,530],[392,530],[523,530],[494,900],
-    [392,450],[392,450],[440,530],[392,530],[587,530],[523,900]
-  ];
-  let offset = 0;
-  notes.forEach(([freq, nextFreq]) => {
-    catFormant(freq * 0.8, nextFreq * 0.8, 0.22, 0.15, offset);
-    offset += 0.26;
-  });
-}
+      // Subtle tremolo for natural cat warble
+      const tremolo = audioCtx.createOscillator();
+      const tremoloGain = audioCtx.createGain();
+      tremolo.frequency.value = 7 + Math.random() * 4;
+      tremoloGain.gain.value = startFreq * 0.05;
+      tremolo.connect(tremoloGain);
+      tremoloGain.connect(osc.frequency);
 
-function playGestureSound(type) {
-  initAudio();
-  switch(type) {
-    case 'yeah': case 'rock': playCelebration(); break;
-    case 'peace': playMeow(2); break;
-    case 'good': playMeow(0); break;
-    case 'wave': playMeow(1); setTimeout(() => playMeow(0), 400); break;
-    case 'love': playPurr(); break;
-    case 'point': playCatChirp(); break;
-    case 'ok': playMeow(0); setTimeout(() => playPurr(), 380); break;
-    case 'power': playCatHiss(); break;
-    default: playMeow(Math.floor(Math.random() * 3));
-  }
-}
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(startFreq, t);
+      osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration * 0.6);
+      osc.frequency.exponentialRampToValueAtTime(endFreq * 0.85, t + duration);
 
-// === CONFETTI ===
-function burst(x, y, count=24, color=null) {
-  const colors = ['#FF85A1','#FFD93D','#C8A2C8','#51CF66','#66D9E8','#FF6B9D','#FFB347'];
-  for (let i = 0; i < count; i++) {
-    const c = document.createElement('div');
-    c.className = 'conf';
-    const sz = 6 + Math.random() * 10;
-    c.style.cssText = `
+      // ADSR envelope
+      gainNode.gain.setValueAtTime(0, t);
+      gainNode.gain.linearRampToValueAtTime(vol, t + 0.04);
+      gainNode.gain.setValueAtTime(vol, t + duration * 0.5);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, t + duration);
+
+      osc.connect(f1); f1.connect(gainNode);
+      osc.connect(f2); f2.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc.start(t); osc.stop(t + duration + 0.05);
+      tremolo.start(t); tremolo.stop(t + duration + 0.05);
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.3, vol = 0.3) {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + duration);
+      } catch (e) { console.warn('Audio locked'); }
+    }
+
+    function playMeow(variant = 0) {
+      if (!audioCtx) return;
+      // 3 realistic meow variants
+      const variants = [
+        // Short 'mew'
+        () => catFormant(650, 1100, 0.35, 0.2),
+        // Classic 'meow' with pitch glide
+        () => {
+          catFormant(700, 1200, 0.2, 0.18, 0);
+          catFormant(1100, 780, 0.25, 0.16, 0.18);
+        },
+        // Questioning 'mrrrow?'
+        () => {
+          catFormant(500, 750, 0.15, 0.14, 0);
+          catFormant(750, 1100, 0.25, 0.17, 0.12);
+          catFormant(1050, 900, 0.2, 0.14, 0.35);
+        }
+      ];
+      variants[variant % variants.length]();
+    }
+
+    function playPurr() {
+      if (!audioCtx) return;
+      // Simulates real purr: low frequency buzz ~25Hz cycling
+      for (let i = 0; i < 16; i++) {
+        const t = audioCtx.currentTime + i * 0.045;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 350 + Math.random() * 100;
+        osc.type = 'sawtooth';
+        osc.frequency.value = 28 + Math.random() * 8;
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+        osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(t); osc.stop(t + 0.05);
+      }
+    }
+
+    function playCatChirp() {
+      if (!audioCtx) return;
+      // Excited chitter sound cats make at birds
+      [0, 0.06, 0.12, 0.18, 0.24].forEach((delay, i) => {
+        const t = audioCtx.currentTime + delay;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(1200 + i * 60, t);
+        osc.frequency.exponentialRampToValueAtTime(800, t + 0.04);
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(t); osc.stop(t + 0.06);
+      });
+    }
+
+    function playCatHiss() {
+      if (!audioCtx) return;
+      // White noise + filter for hiss effect
+      const bufferSize = audioCtx.sampleRate * 0.5;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const src = audioCtx.createBufferSource();
+      src.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 3000;
+      filter.Q.value = 0.5;
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+      src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+      src.start(); src.stop(audioCtx.currentTime + 0.5);
+    }
+
+    function playCelebration() {
+      if (!audioCtx) return;
+      // A happy cat "mew mew" melody
+      const pattern = [
+        [700, 900, 0.18], [900, 1200, 0.18], [1200, 950, 0.2],
+        [950, 1300, 0.18], [1300, 1050, 0.22]
+      ];
+      let offset = 0;
+      pattern.forEach(([s, e, dur]) => {
+        catFormant(s, e, dur, 0.16, offset);
+        offset += dur + 0.04;
+      });
+    }
+
+    function playBirthday() {
+      if (!audioCtx) return;
+      // Happy Birthday as cat meows
+      const notes = [
+        [392, 450], [392, 450], [440, 530], [392, 530], [523, 530], [494, 900],
+        [392, 450], [392, 450], [440, 530], [392, 530], [587, 530], [523, 900]
+      ];
+      let offset = 0;
+      notes.forEach(([freq, nextFreq]) => {
+        catFormant(freq * 0.8, nextFreq * 0.8, 0.22, 0.15, offset);
+        offset += 0.26;
+      });
+    }
+
+    function playGestureSound(type) {
+      initAudio();
+      switch (type) {
+        case 'yeah': case 'rock': playCelebration(); break;
+        case 'peace': playMeow(2); break;
+        case 'good': playMeow(0); break;
+        case 'wave': playMeow(1); setTimeout(() => playMeow(0), 400); break;
+        case 'love': playPurr(); break;
+        case 'point': playCatChirp(); break;
+        case 'ok': playMeow(0); setTimeout(() => playPurr(), 380); break;
+        case 'power': playCatHiss(); break;
+        default: playMeow(Math.floor(Math.random() * 3));
+      }
+    }
+
+    // === CONFETTI ===
+    function burst(x, y, count = 24, color = null) {
+      const colors = ['#FF85A1', '#FFD93D', '#C8A2C8', '#51CF66', '#66D9E8', '#FF6B9D', '#FFB347'];
+      for (let i = 0; i < count; i++) {
+        const c = document.createElement('div');
+        c.className = 'conf';
+        const sz = 6 + Math.random() * 10;
+        c.style.cssText = `
       left:${x}px; top:${y}px;
       width:${sz}px; height:${sz}px;
-      background:${color||colors[Math.floor(Math.random()*colors.length)]};
-      border-radius:${Math.random()>0.5?'50%':'3px'};
-      animation-duration:${1.5+Math.random()*2}s;
-      animation-delay:${Math.random()*0.3}s;
+      background:${color || colors[Math.floor(Math.random() * colors.length)]};
+      border-radius:${Math.random() > 0.5 ? '50%' : '3px'};
+      animation-duration:${1.5 + Math.random() * 2}s;
+      animation-delay:${Math.random() * 0.3}s;
     `;
-    const angle = (Math.random() * 360) * Math.PI / 180;
-    const dist = 80 + Math.random() * 120;
-    c.animate([
-      { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1 },
-      { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) rotate(${Math.random()*720}deg) scale(0)`, opacity: 0 }
-    ], { duration: 1500 + Math.random() * 1000, easing: 'cubic-bezier(0,0.9,0.6,1)', fill: 'forwards' });
-    confettiContainer.appendChild(c);
-    setTimeout(() => c.remove(), 3000);
-  }
-}
-
-function fullConfetti() {
-  for (let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      burst(Math.random()*window.innerWidth, Math.random()*window.innerHeight*0.5, 15);
-    }, i * 200);
-  }
-}
-
-// === FLOATING CAT STICKERS ===
-function spawnCatSticker(emojis, x, y) {
-  emojis.slice(0, 3).forEach((emoji, i) => {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'cat-sticker';
-      el.textContent = emoji;
-      
-      // Much bigger random spread so they don't overlap as much
-      const spreadX = (Math.random() - 0.5) * 450; 
-      const spreadY = (Math.random() - 0.5) * 250 - 80;
-      
-      el.style.left = (x + spreadX) + 'px';
-      el.style.top = (y + spreadY) + 'px';
-      
-      // Randomize size significantly for each sticker (makes them huge)
-      const sizeMultiplier = 1.5 + Math.random() * 1.5;
-      el.style.fontSize = `${3.5 * sizeMultiplier}rem`;
-
-      document.body.appendChild(el);
-      // Stay on screen longer before being removed from DOM
-      setTimeout(() => el.remove(), 4200);
-    }, i * 300); // Slower burst (0.3s between each sticker)
-  });
-}
-
-// === GESTURE DETECTION ===
-function getLandmark(lm, i) { return { x: lm[i].x, y: lm[i].y, z: lm[i].z }; }
-
-function isFingerUp(lm, tip, pip) {
-  return lm[tip].y < lm[pip].y;
-}
-
-function dist(a, b) {
-  return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
-}
-
-function detectGesture(lm) {
-  // Finger states
-  const thumbUp  = lm[4].x > lm[3].x; // mirrored: thumb points right = up in real
-  const thumbUpAlt = dist(lm[4], lm[0]) > dist(lm[3], lm[0]);
-  const indexUp  = isFingerUp(lm, 8, 6);
-  const middleUp = isFingerUp(lm, 12, 10);
-  const ringUp   = isFingerUp(lm, 16, 14);
-  const pinkyUp  = isFingerUp(lm, 20, 18);
-
-  const allFingersUp = indexUp && middleUp && ringUp && pinkyUp;
-  const noFingersUp  = !indexUp && !middleUp && !ringUp && !pinkyUp;
-
-  // Pinch
-  const pinchDist = dist(lm[4], lm[8]);
-  const isPinch = pinchDist < 0.06;
-
-  // OK gesture: thumb & index form circle, others up
-  const okDist = dist(lm[4], lm[8]);
-  const isOK = okDist < 0.07 && middleUp && ringUp && pinkyUp;
-
-  // Yeah / Rock: index + pinky up, middle + ring down
-  if (indexUp && pinkyUp && !middleUp && !ringUp) return 'yeah';
-
-  // Peace: index + middle up, others down
-  if (indexUp && middleUp && !ringUp && !pinkyUp) return 'peace';
-
-  // OK
-  if (isOK) return 'ok';
-
-  // Pinch / Heart
-  if (isPinch && !indexUp) return 'heart';
-
-  // Open hand / Wave
-  if (allFingersUp) return 'wave';
-
-  // Thumbs up: only thumb, no fingers
-  if (noFingersUp && thumbUpAlt) return 'thumbsup';
-
-  // Point: only index
-  if (indexUp && !middleUp && !ringUp && !pinkyUp) return 'point';
-
-  // Fist
-  if (noFingersUp) return 'fist';
-
-  return null;
-}
-
-// === REACTION SYSTEM ===
-let lastGesture = null;
-let lastGestureTime = 0;
-const GESTURE_COOLDOWN = 1800;
-let reactionTimeout;
-
-function triggerReaction(gestureName, handX, handY) {
-  const now = Date.now();
-  if (gestureName === lastGesture && (now - lastGestureTime) < GESTURE_COOLDOWN) return;
-
-  lastGesture = gestureName;
-  lastGestureTime = now;
-
-  const g = GESTURES[gestureName];
-  if (!g) return;
-
-  // Update gesture guide highlight
-  document.querySelectorAll('.gesture-item').forEach(el => el.classList.remove('gesture-active'));
-  const gEl = document.getElementById(g.id);
-  if (gEl) gEl.classList.add('gesture-active');
-
-  // Update reaction bubble
-  const catImg = document.getElementById('cat-img');
-  if (g.img) {
-    catImg.style.display = 'block';
-    catEmoji.style.display = 'none';
-    catImg.style.animation = 'none';
-    catImg.offsetHeight; // reflow
-    catImg.src = g.img;
-    catImg.style.animation = 'imgPop 1.2s cubic-bezier(0.34,1.56,0.64,1)';
-    catImg.style.borderColor = g.color;
-  } else {
-    catImg.style.display = 'none';
-    catEmoji.style.display = 'block';
-    catEmoji.textContent = g.emoji;
-    catEmoji.style.animation = 'none';
-    catEmoji.offsetHeight; // reflow
-    catEmoji.style.animation = 'catBounce 0.6s ease';
-  }
-
-  reactionName.textContent = g.name;
-  reactionText.innerHTML = g.text.replace('\n','<br>');
-
-  document.getElementById('reaction-bubble').style.borderColor = g.color;
-
-  // Camera frame glow
-  document.getElementById('camera-frame').classList.add('paw-detected');
-  document.getElementById('camera-frame').style.borderColor = g.color;
-  document.getElementById('camera-frame').style.boxShadow = `0 8px 32px ${g.color}88, inset 0 0 0 2px white`;
-
-  // Spawn stickers near hand position
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const sx = (1 - handX) * vw * 0.6; // mirrored
-  const sy = handY * vh;
-  spawnCatSticker(g.cats, sx, sy);
-
-  // Confetti
-  if (g.confetti) {
-    fullConfetti();
-    if (gestureName === 'yeah' || gestureName === 'wave') {
-      playBirthday();
-    } else {
-      g.sounds.forEach(s => playGestureSound(s));
-    }
-  } else {
-    g.sounds.forEach(s => playGestureSound(s));
-  }
-
-  clearTimeout(reactionTimeout);
-  reactionTimeout = setTimeout(() => {
-    document.getElementById('camera-frame').classList.remove('paw-detected');
-    document.getElementById('camera-frame').style.borderColor = '';
-    document.getElementById('camera-frame').style.boxShadow = '';
-    document.querySelectorAll('.gesture-item').forEach(el => el.classList.remove('gesture-active'));
-  }, 2000);
-}
-
-// === DRAWING ===
-function drawPawHand(lm, color) {
-  const w = canvas.width, h = canvas.height;
-
-  // Draw connections
-  const connections = [
-    [0,1],[1,2],[2,3],[3,4],
-    [0,5],[5,6],[6,7],[7,8],
-    [0,9],[9,10],[10,11],[11,12],
-    [0,13],[13,14],[14,15],[15,16],
-    [0,17],[17,18],[18,19],[19,20],
-    [5,9],[9,13],[13,17]
-  ];
-
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
-
-  connections.forEach(([a,b]) => {
-    ctx.beginPath();
-    ctx.moveTo(lm[a].x * w, lm[a].y * h);
-    ctx.lineTo(lm[b].x * w, lm[b].y * h);
-    ctx.stroke();
-  });
-
-  // Draw landmark dots as paw pads
-  lm.forEach((pt, i) => {
-    const x = pt.x * w, y = pt.y * h;
-    const r = i === 0 ? 10 : (i % 4 === 0 ? 7 : 4);
-
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'white';
-    ctx.fill();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Small inner dot
-    ctx.beginPath();
-    ctx.arc(x, y, r * 0.4, 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.fill();
-  });
-}
-
-// === MEDIAPIPE SETUP ===
-let hands;
-let gestureStabilizer = {};
-const STABLE_FRAMES = 4;
-
-function onResults(results) {
-  canvas.width = video.videoWidth || 640;
-  canvas.height = video.videoHeight || 480;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
-    statusBadge.textContent = '🐱 Show your paw...';
-    statusBadge.style.background = 'rgba(0,0,0,0.6)';
-    Object.keys(gestureStabilizer).forEach(k => gestureStabilizer[k] = 0);
-    return;
-  }
-
-  const colors = ['#FF85A1','#FFD93D'];
-
-  results.multiHandLandmarks.forEach((lm, idx) => {
-    const color = colors[idx % colors.length];
-    drawPawHand(lm, color);
-
-    const gesture = detectGesture(lm);
-    if (gesture) {
-      gestureStabilizer[gesture] = (gestureStabilizer[gesture] || 0) + 1;
-      if (gestureStabilizer[gesture] === STABLE_FRAMES) {
-        const wristX = lm[0].x;
-        const wristY = lm[0].y;
-        triggerReaction(gesture, wristX, wristY);
+        const angle = (Math.random() * 360) * Math.PI / 180;
+        const dist = 80 + Math.random() * 120;
+        c.animate([
+          { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1 },
+          { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) rotate(${Math.random() * 720}deg) scale(0)`, opacity: 0 }
+        ], { duration: 1500 + Math.random() * 1000, easing: 'cubic-bezier(0,0.9,0.6,1)', fill: 'forwards' });
+        confettiContainer.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
       }
-      // Reset others
-      Object.keys(GESTURES).forEach(k => {
-        if (k !== gesture) gestureStabilizer[k] = 0;
+    }
+
+    function fullConfetti() {
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          burst(Math.random() * window.innerWidth, Math.random() * window.innerHeight * 0.5, 15);
+        }, i * 200);
+      }
+    }
+
+    // === FLOATING CAT STICKERS ===
+    function spawnCatSticker(emojis, x, y) {
+      emojis.slice(0, 3).forEach((emoji, i) => {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'cat-sticker';
+          el.textContent = emoji;
+
+          // Much bigger random spread so they don't overlap as much
+          const spreadX = (Math.random() - 0.5) * 450;
+          const spreadY = (Math.random() - 0.5) * 250 - 80;
+
+          el.style.left = (x + spreadX) + 'px';
+          el.style.top = (y + spreadY) + 'px';
+
+          // Randomize size significantly for each sticker (makes them huge)
+          const sizeMultiplier = 1.5 + Math.random() * 1.5;
+          el.style.fontSize = `${3.5 * sizeMultiplier}rem`;
+
+          document.body.appendChild(el);
+          // Stay on screen longer before being removed from DOM
+          setTimeout(() => el.remove(), 4200);
+        }, i * 300); // Slower burst (0.3s between each sticker)
+      });
+    }
+
+    // === GESTURE DETECTION ===
+    function getLandmark(lm, i) { return { x: lm[i].x, y: lm[i].y, z: lm[i].z }; }
+
+    function isFingerUp(lm, tip, pip) {
+      return lm[tip].y < lm[pip].y;
+    }
+
+    function dist(a, b) {
+      return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+    }
+
+    function detectGesture(lm) {
+      // Finger states
+      const thumbUp = lm[4].x > lm[3].x; // mirrored: thumb points right = up in real
+      const thumbUpAlt = dist(lm[4], lm[0]) > dist(lm[3], lm[0]);
+      const indexUp = isFingerUp(lm, 8, 6);
+      const middleUp = isFingerUp(lm, 12, 10);
+      const ringUp = isFingerUp(lm, 16, 14);
+      const pinkyUp = isFingerUp(lm, 20, 18);
+
+      const allFingersUp = indexUp && middleUp && ringUp && pinkyUp;
+      const noFingersUp = !indexUp && !middleUp && !ringUp && !pinkyUp;
+
+      // Pinch
+      const pinchDist = dist(lm[4], lm[8]);
+      const isPinch = pinchDist < 0.06;
+
+      // OK gesture: thumb & index form circle, others up
+      const okDist = dist(lm[4], lm[8]);
+      const isOK = okDist < 0.07 && middleUp && ringUp && pinkyUp;
+
+      // Yeah / Rock: index + pinky up, middle + ring down
+      if (indexUp && pinkyUp && !middleUp && !ringUp) return 'yeah';
+
+      // Peace: index + middle up, others down
+      if (indexUp && middleUp && !ringUp && !pinkyUp) return 'peace';
+
+      // OK
+      if (isOK) return 'ok';
+
+      // Pinch / Heart
+      if (isPinch && !indexUp) return 'heart';
+
+      // Open hand / Wave
+      if (allFingersUp) return 'wave';
+
+      // Thumbs up: only thumb, no fingers
+      if (noFingersUp && thumbUpAlt) return 'thumbsup';
+
+      // Point: only index
+      if (indexUp && !middleUp && !ringUp && !pinkyUp) return 'point';
+
+      // Fist
+      if (noFingersUp) return 'fist';
+
+      return null;
+    }
+
+    // === REACTION SYSTEM ===
+    let lastGesture = null;
+    let lastGestureTime = 0;
+    const GESTURE_COOLDOWN = 1800;
+    let reactionTimeout;
+
+    function triggerReaction(gestureName, handX, handY) {
+      const now = Date.now();
+      if (gestureName === lastGesture && (now - lastGestureTime) < GESTURE_COOLDOWN) return;
+
+      lastGesture = gestureName;
+      lastGestureTime = now;
+
+      const g = GESTURES[gestureName];
+      if (!g) return;
+
+      // Update gesture guide highlight
+      document.querySelectorAll('.gesture-item').forEach(el => el.classList.remove('gesture-active'));
+      const gEl = document.getElementById(g.id);
+      if (gEl) gEl.classList.add('gesture-active');
+
+      // Update reaction bubble
+      const catImg = document.getElementById('cat-img');
+      if (g.img) {
+        catImg.style.display = 'block';
+        catEmoji.style.display = 'none';
+        catImg.style.animation = 'none';
+        catImg.offsetHeight; // reflow
+        catImg.src = g.img;
+        catImg.style.animation = 'imgPop 1.2s cubic-bezier(0.34,1.56,0.64,1)';
+        catImg.style.borderColor = g.color;
+      } else {
+        catImg.style.display = 'none';
+        catEmoji.style.display = 'block';
+        catEmoji.textContent = g.emoji;
+        catEmoji.style.animation = 'none';
+        catEmoji.offsetHeight; // reflow
+        catEmoji.style.animation = 'catBounce 0.6s ease';
+      }
+
+      reactionName.textContent = g.name;
+      reactionText.innerHTML = g.text.replace('\n', '<br>');
+
+      document.getElementById('reaction-bubble').style.borderColor = g.color;
+
+      // Camera frame glow
+      document.getElementById('camera-frame').classList.add('paw-detected');
+      document.getElementById('camera-frame').style.borderColor = g.color;
+      document.getElementById('camera-frame').style.boxShadow = `0 8px 32px ${g.color}88, inset 0 0 0 2px white`;
+
+      // Spawn stickers near hand position
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const sx = (1 - handX) * vw * 0.6; // mirrored
+      const sy = handY * vh;
+      spawnCatSticker(g.cats, sx, sy);
+
+      // Confetti
+      if (g.confetti) {
+        fullConfetti();
+        if (gestureName === 'yeah' || gestureName === 'wave') {
+          playBirthday();
+        } else {
+          g.sounds.forEach(s => playGestureSound(s));
+        }
+      } else {
+        g.sounds.forEach(s => playGestureSound(s));
+      }
+
+      clearTimeout(reactionTimeout);
+      reactionTimeout = setTimeout(() => {
+        document.getElementById('camera-frame').classList.remove('paw-detected');
+        document.getElementById('camera-frame').style.borderColor = '';
+        document.getElementById('camera-frame').style.boxShadow = '';
+        document.querySelectorAll('.gesture-item').forEach(el => el.classList.remove('gesture-active'));
+      }, 2000);
+    }
+
+    // === DRAWING ===
+    function drawPawHand(lm, color) {
+      const w = canvas.width, h = canvas.height;
+
+      // Draw connections
+      const connections = [
+        [0, 1], [1, 2], [2, 3], [3, 4],
+        [0, 5], [5, 6], [6, 7], [7, 8],
+        [0, 9], [9, 10], [10, 11], [11, 12],
+        [0, 13], [13, 14], [14, 15], [15, 16],
+        [0, 17], [17, 18], [18, 19], [19, 20],
+        [5, 9], [9, 13], [13, 17]
+      ];
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+
+      connections.forEach(([a, b]) => {
+        ctx.beginPath();
+        ctx.moveTo(lm[a].x * w, lm[a].y * h);
+        ctx.lineTo(lm[b].x * w, lm[b].y * h);
+        ctx.stroke();
       });
 
-      statusBadge.textContent = `🐾 ${GESTURES[gesture]?.name || gesture}`;
-      statusBadge.style.background = `${GESTURES[gesture]?.color || '#FF85A1'}cc`;
-    } else {
-      gestureStabilizer = {};
-      statusBadge.textContent = '✋ Hand detected - try a gesture!';
-      statusBadge.style.background = 'rgba(81,207,102,0.8)';
+      // Draw landmark dots as paw pads
+      lm.forEach((pt, i) => {
+        const x = pt.x * w, y = pt.y * h;
+        const r = i === 0 ? 10 : (i % 4 === 0 ? 7 : 4);
+
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Small inner dot
+        ctx.beginPath();
+        ctx.arc(x, y, r * 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+      });
     }
-  });
-}
 
-async function startCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
-    });
-    video.srcObject = stream;
-    video.onloadedmetadata = () => video.play();
-    statusBadge.textContent = '🐾 Camera ready!';
-  } catch(e) {
-    statusBadge.textContent = '⚠️ Camera not available';
-    console.error(e);
-  }
-}
+    // === MEDIAPIPE SETUP ===
+    let hands;
+    let gestureStabilizer = {};
+    const STABLE_FRAMES = 4;
 
-function initMediaPipe() {
-  hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${f}` });
+    function onResults(results) {
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
 
-  hands.setOptions({
-    maxNumHands: 2,
-    modelComplexity: 1,
-    minDetectionConfidence: 0.7,
-    minTrackingConfidence: 0.6
-  });
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  hands.onResults(onResults);
-
-  const camera = new Camera(video, {
-    onFrame: async () => { await hands.send({ image: video }); },
-    width: 640, height: 480
-  });
-
-  camera.start().then(() => {
-    statusBadge.textContent = '🐱 Show your paw!';
-  }).catch(e => {
-    console.warn('Camera util failed, using manual loop', e);
-    startCamera();
-    const loop = () => {
-      if (video.readyState >= 2) hands.send({ image: video });
-      requestAnimationFrame(loop);
-    };
-    loop();
-  });
-}
-
-// === BG HEARTS ===
-function createBgHearts() {
-  const container = document.getElementById('bg-hearts');
-  const items = ['🐾','💕','✨','🌸','⭐','💖','🐱','🎀'];
-  for (let i = 0; i < 20; i++) {
-    const el = document.createElement('span');
-    el.textContent = items[Math.floor(Math.random()*items.length)];
-    el.style.cssText = `
-      left:${Math.random()*100}%;
-      animation-duration:${8+Math.random()*10}s;
-      animation-delay:${Math.random()*8}s;
-      font-size:${0.8+Math.random()*1.2}rem;
-    `;
-    container.appendChild(el);
-  }
-}
-
-// === INTRO CALENDAR SEQUENCE ===
-const introOverlay = document.getElementById('intro-overlay');
-const introPaw = document.getElementById('intro-paw');
-const startBtn = document.getElementById('start-btn');
-const miaoGlassBanner = document.getElementById('miao-glass-banner');
-const miaoNeonText = document.getElementById('miao-neon-text');
-
-// Helper to move paw to an element center relative to the calendar card
-function getPawTarget(elId) {
-  const el = document.getElementById(elId);
-  const card = document.getElementById('calendar-card');
-  const cardRect = card.getBoundingClientRect();
-  const elRect = el.getBoundingClientRect();
-  return {
-    x: elRect.left - cardRect.left + elRect.width / 2,
-    y: elRect.top - cardRect.top + elRect.height / 2
-  };
-}
-
-async function runIntroSequence() {
-  document.getElementById('loading').style.opacity = '0';
-  setTimeout(() => document.getElementById('loading').style.display = 'none', 800);
-  
-  introOverlay.style.display = 'flex';
-  // Small delay for fade-in
-  await new Promise(r => setTimeout(r, 600));
-
-  // Sequence setup
-  introPaw.style.setProperty('--paw-x', `0px`);
-  introPaw.style.setProperty('--paw-y', `0px`);
-
-  const tapDay = async (dayNum, isAggressive = false) => {
-    const target = getPawTarget(`day-${dayNum}`);
-    // Center the paw on the specific date
-    const dx = target.x - (introPaw.offsetLeft + introPaw.width * 0.5);
-    const dy = target.y - (introPaw.offsetTop + introPaw.height * 0.5);
-    
-    // Move to target
-    introPaw.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-    introPaw.style.setProperty('--paw-x', `${dx}px`);
-    introPaw.style.setProperty('--paw-y', `${dy}px`);
-    await new Promise(r => setTimeout(r, 550));
-
-    if (isAggressive) {
-      // Rapid tapping
-      for(let i=0; i<4; i++) {
-        introPaw.classList.add('paw-strike');
-        document.getElementById(`day-${dayNum}`).classList.add('tapped-aggro');
-        try { catFormant(300 + Math.random()*100, 450, 0.1, 0.25, 0); } catch(e){}
-        await new Promise(r => setTimeout(r, 120));
-        introPaw.classList.remove('paw-strike');
-        document.getElementById(`day-${dayNum}`).classList.remove('tapped-aggro');
-        await new Promise(r => setTimeout(r, 80));
+      if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
+        statusBadge.textContent = '🐱 Show your paw...';
+        statusBadge.style.background = 'rgba(0,0,0,0.6)';
+        Object.keys(gestureStabilizer).forEach(k => gestureStabilizer[k] = 0);
+        return;
       }
-    } else {
-      // Single tap
-      introPaw.classList.add('paw-strike');
-      try { catFormant(500 + dayNum*150, 700 + dayNum*150, 0.15, 0.2, 0); } catch(e){}
-      setTimeout(() => document.getElementById(`day-${dayNum}`).classList.add('tapped'), 50);
+
+      const colors = ['#FF85A1', '#FFD93D'];
+
+      results.multiHandLandmarks.forEach((lm, idx) => {
+        const color = colors[idx % colors.length];
+        drawPawHand(lm, color);
+
+        const gesture = detectGesture(lm);
+        if (gesture) {
+          gestureStabilizer[gesture] = (gestureStabilizer[gesture] || 0) + 1;
+          if (gestureStabilizer[gesture] === STABLE_FRAMES) {
+            const wristX = lm[0].x;
+            const wristY = lm[0].y;
+            triggerReaction(gesture, wristX, wristY);
+          }
+          // Reset others
+          Object.keys(GESTURES).forEach(k => {
+            if (k !== gesture) gestureStabilizer[k] = 0;
+          });
+
+          statusBadge.textContent = `🐾 ${GESTURES[gesture]?.name || gesture}`;
+          statusBadge.style.background = `${GESTURES[gesture]?.color || '#FF85A1'}cc`;
+        } else {
+          gestureStabilizer = {};
+          statusBadge.textContent = '✋ Hand detected - try a gesture!';
+          statusBadge.style.background = 'rgba(81,207,102,0.8)';
+        }
+      });
+    }
+
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
+        });
+        video.srcObject = stream;
+        video.onloadedmetadata = () => video.play();
+        statusBadge.textContent = '🐾 Camera ready!';
+      } catch (e) {
+        statusBadge.textContent = '⚠️ Camera not available';
+        console.error(e);
+      }
+    }
+
+    function initMediaPipe() {
+      hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${f}` });
+
+      hands.setOptions({
+        maxNumHands: 2,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.7,
+        minTrackingConfidence: 0.6
+      });
+
+      hands.onResults(onResults);
+
+      const camera = new Camera(video, {
+        onFrame: async () => { await hands.send({ image: video }); },
+        width: 640, height: 480
+      });
+
+      camera.start().then(() => {
+        statusBadge.textContent = '🐱 Show your paw!';
+      }).catch(e => {
+        console.warn('Camera util failed, using manual loop', e);
+        startCamera();
+        const loop = () => {
+          if (video.readyState >= 2) hands.send({ image: video });
+          requestAnimationFrame(loop);
+        };
+        loop();
+      });
+    }
+
+    // === BG HEARTS ===
+    function createBgHearts() {
+      const container = document.getElementById('bg-hearts');
+      const items = ['🐾', '💕', '✨', '🌸', '⭐', '💖', '🐱', '🎀'];
+      for (let i = 0; i < 20; i++) {
+        const el = document.createElement('span');
+        el.textContent = items[Math.floor(Math.random() * items.length)];
+        el.style.cssText = `
+      left:${Math.random() * 100}%;
+      animation-duration:${8 + Math.random() * 10}s;
+      animation-delay:${Math.random() * 8}s;
+      font-size:${0.8 + Math.random() * 1.2}rem;
+    `;
+        container.appendChild(el);
+      }
+    }
+
+    // === INTRO CALENDAR SEQUENCE ===
+    const introOverlay = document.getElementById('intro-overlay');
+    const introPaw = document.getElementById('intro-paw');
+    const startBtn = document.getElementById('start-btn');
+    const miaoGlassBanner = document.getElementById('miao-glass-banner');
+    const miaoNeonText = document.getElementById('miao-neon-text');
+
+    // Helper to move paw to an element center relative to the calendar card
+    function getPawTarget(elId) {
+      const el = document.getElementById(elId);
+      const card = document.getElementById('calendar-card');
+      const cardRect = card.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      return {
+        x: elRect.left - cardRect.left + elRect.width / 2,
+        y: elRect.top - cardRect.top + elRect.height / 2
+      };
+    }
+
+    async function runIntroSequence() {
+      document.getElementById('loading').style.opacity = '0';
+      setTimeout(() => document.getElementById('loading').style.display = 'none', 800);
+
+      introOverlay.style.display = 'flex';
+      // Small delay for fade-in
+      await new Promise(r => setTimeout(r, 600));
+
+      // Sequence setup
+      introPaw.style.setProperty('--paw-x', `0px`);
+      introPaw.style.setProperty('--paw-y', `0px`);
+
+      const tapDay = async (dayNum, isAggressive = false) => {
+        const target = getPawTarget(`day-${dayNum}`);
+        // Center the paw on the specific date
+        const dx = target.x - (introPaw.offsetLeft + introPaw.width * 0.5);
+        const dy = target.y - (introPaw.offsetTop + introPaw.height * 0.5);
+
+        // Move to target
+        introPaw.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        introPaw.style.setProperty('--paw-x', `${dx}px`);
+        introPaw.style.setProperty('--paw-y', `${dy}px`);
+        await new Promise(r => setTimeout(r, 550));
+
+        if (isAggressive) {
+          // Rapid tapping
+          for (let i = 0; i < 4; i++) {
+            introPaw.classList.add('paw-strike');
+            document.getElementById(`day-${dayNum}`).classList.add('tapped-aggro');
+            try { catFormant(300 + Math.random() * 100, 450, 0.1, 0.25, 0); } catch (e) { }
+            await new Promise(r => setTimeout(r, 120));
+            introPaw.classList.remove('paw-strike');
+            document.getElementById(`day-${dayNum}`).classList.remove('tapped-aggro');
+            await new Promise(r => setTimeout(r, 80));
+          }
+        } else {
+          // Single tap
+          introPaw.classList.add('paw-strike');
+          try { catFormant(500 + dayNum * 150, 700 + dayNum * 150, 0.15, 0.2, 0); } catch (e) { }
+          setTimeout(() => document.getElementById(`day-${dayNum}`).classList.add('tapped'), 50);
+          await new Promise(r => setTimeout(r, 400));
+          introPaw.classList.remove('paw-strike');
+          document.getElementById(`day-${dayNum}`).classList.remove('tapped');
+        }
+      };
+
+      // Init audio context quietly for the taps
+      try {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(e => console.warn(e));
+        }
+      } catch (e) { }
+
+      // Execute taps
+      await tapDay(1);
+      await new Promise(r => setTimeout(r, 200));
+      await tapDay(2);
+      await new Promise(r => setTimeout(r, 200));
+      await tapDay(3);
       await new Promise(r => setTimeout(r, 400));
+
+      // Day 4 aggressive tap
+      await tapDay(4, true);
+
+      // Day 4 glow and retreat paw
+      document.getElementById('day-4').classList.add('glow');
+      try { catFormant(800, 900, 0.4, 0.4, 0); } catch (e) { }
+      introPaw.style.transition = 'transform 0.8s ease-in';
+      introPaw.style.setProperty('--paw-x', `0px`);
+      introPaw.style.setProperty('--paw-y', `0px`);
+      await new Promise(r => setTimeout(r, 600));
+
+      // Trigger Apple-like smooth handwriting animation
+      miaoGlassBanner.style.opacity = '1';
+      miaoNeonText.classList.add('show');
+
+      // Happy birthday cheer
+      playBirthday();
+      burst(window.innerWidth / 2, 80, 20, '#FF85A1');
+
+      // Wait for handwriting to finish (it takes 3s)
+      await new Promise(r => setTimeout(r, 2600));
+
+      // Paw swoops back in to tap the banner itself!
+      const bannerTarget = getPawTarget('miao-glass-banner');
+      const bdx = bannerTarget.x - (introPaw.offsetLeft + introPaw.width * 0.5);
+      const bdy = bannerTarget.y - (introPaw.offsetTop + introPaw.height * 0.5);
+      introPaw.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      introPaw.style.setProperty('--paw-x', `${bdx}px`);
+      introPaw.style.setProperty('--paw-y', `${bdy}px`);
+      await new Promise(r => setTimeout(r, 650));
+
+      // Banner tap!
+      introPaw.classList.add('paw-strike');
+      try { catFormant(700, 1200, 0.15, 0.2, 0); } catch (e) { }
+      miaoGlassBanner.style.transform = 'translate(-50%, -50%) rotate(-5deg) scale(0.9)';
+      await new Promise(r => setTimeout(r, 150));
+      miaoGlassBanner.style.transform = 'translate(-50%, -50%) rotate(-5deg) scale(1)';
+      miaoGlassBanner.style.boxShadow = '0 15px 40px rgba(255,133,161,0.6), inset 0 0 20px rgba(255,255,255,0.8)';
+      fullConfetti(); // Massive confetti on final tap
       introPaw.classList.remove('paw-strike');
-      document.getElementById(`day-${dayNum}`).classList.remove('tapped');
+      await new Promise(r => setTimeout(r, 400));
+
+      // Paw retreats one last time
+      introPaw.style.transition = 'transform 0.8s ease-in';
+      introPaw.style.setProperty('--paw-x', `0px`);
+      introPaw.style.setProperty('--paw-y', `0px`);
+
+      // Wait a beat, then show button
+      await new Promise(r => setTimeout(r, 400));
+      startBtn.classList.add('show');
     }
-  };
 
-  // Init audio context quietly for the taps
-  try {
-    initAudio();
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume().catch(e => console.warn(e));
+    // === BUTTON START ===
+    startBtn.addEventListener('click', () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      playMeow(0);
+
+      introOverlay.style.opacity = '0';
+      setTimeout(() => introOverlay.style.display = 'none', 800);
+
+      // Start the main app machinery
+      initMediaPipe();
+
+      // Birthday celebration on load
+      setTimeout(() => {
+        fullConfetti();
+        burst(window.innerWidth / 2, 80, 30, '#FF85A1');
+      }, 1000);
+    });
+
+    // === INIT ===
+    createBgHearts();
+
+    // Add glow effect on hover for the button
+    const openBtn = document.getElementById('open-surprise-btn');
+    openBtn.addEventListener('click', (e) => {
+      e.target.style.transform = 'scale(0.9)';
+      e.target.style.opacity = '0.5';
+
+      // UNLOCK MOBILE WEB AUDIO API
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        // Play a tiny empty buffer synchronously to force unlock in Safari/iOS
+        const buffer = audioCtx.createBuffer(1, 1, 22050);
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+        source.start(0);
+      } catch (err) {
+        console.warn('Audio unlock blocked', err);
+      }
+
+      runIntroSequence();
+    });
+
+    // === RANDOM THOUGHTS FEATURE ===
+    const thoughtCorpus = {
+      1: [ // phil
+        { t: "有时候想太多，其实只是大脑在同时跑太多版本的未来。", type: "phil" },
+        { t: "所谓效率，会不会只是决定忽略什么的能力。", type: "phil" },
+        { t: "如果每个选择都会分支，那我们其实一直在错过无数人生。", type: "phil" },
+        { t: "人会不会只是习惯把未知解释成问题。", type: "phil" },
+        { t: "有些答案不是找不到，是还没准备好接受。", type: "phil" },
+        { t: "也许清醒的人，只是比别人更早意识到复杂。", type: "phil" }
+      ],
+      2: [ // cat
+        { t: "猫大概觉得人类是进化得不太完整的工具。", type: "cat" },
+        { t: "如果猫会写代码，它们应该不会修bug。", type: "cat" },
+        { t: "猫看着你，大概在判断你今天值不值得理。", type: "cat" },
+        { t: "也许猫才是这个世界的观察者，我们只是被观察。", type: "cat" },
+        { t: "猫不需要解释自己，这点其实挺高级的。", type: "cat" }
+      ],
+      3: [ // meta
+        { t: "你刚刚按了这个按钮，这个决定很有意思。", type: "meta" },
+        { t: "如果这个按钮也在观察你呢？", type: "meta" },
+        { t: "有些行为没有意义，但你还是做了，比如现在。", type: "meta" },
+        { t: "你是因为无聊点这个，还是因为好奇？", type: "meta" },
+        { t: "再点一次也不会变聪明，但你还是会点。", type: "meta" }
+      ],
+      4: [ // obs
+        { t: "人类总是喜欢给不存在的东西找规律。", type: "obs" },
+        { t: "安静的时候，其实是在跟自己进行一场高频对话。", type: "obs" },
+        { t: "有些事情拖着不做，可能是潜意识觉得它本来就不该做。", type: "obs" },
+        { t: "当我们说随便时，其实心里已经排除了99%的选项。", type: "obs" },
+        { t: "很多时候，所谓的巧合只是注意力刚好分配到了那里。", type: "obs" }
+      ],
+      5: [ // conn
+        { t: "有些想法，只有跟对的人讲才会成立。", type: "conn" },
+        { t: "跟对的人一起做事，会让事情变得没那么像工作。", type: "conn" },
+        { t: "有时候不是事情变简单了，是人刚好对了。", type: "conn" },
+        { t: "某些连接，不需要解释也会刚好对上。", type: "conn" }
+      ],
+      6: [ // rare
+        { t: "ok，这个是隐藏的。", type: "rare" },
+        { t: "happy birthday, miao。", type: "rare" }
+      ]
+    };
+
+    const thoughtMoods = {
+      phil: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR98JOr74QwaA9eXCuSLgc8tfOszGy7im6ZqA&s", // Thought cat (updated)
+      cat: "https://i.chzbgr.com/full/10464637696/hC54AD9C7",  // Derp cat
+      meta: "https://static.wixstatic.com/media/33b7f3_eefbcf4da8a1459b8717f6336f925096f002.jpg/v1/fit/w_500,h_500,q_90/file.jpg", // Confused meta cat
+      obs: "https://bpic.588ku.com/back_list_pic/24/03/16/35ba8a575531ab8bb82175fd76943db9.jpg!/fw/350/quality/95/unsharp/true/compress/true", // Observing cat
+      conn: "https://meowtownshop.com/cdn/shop/articles/staring-cute-cat-love-cw9lu6mgbjc3gesf.jpg?v=1725454326", // Staring heart cat
+      rare: "https://thumbs.dreamstime.com/b/cat-doing-victory-hand-sign-funny-ai-generative-illustration-280019951.jpg"
+    };
+
+    const signatures = {
+      "phil": "—— 哲学猫",
+      "cat": "—— 逻辑猫",
+      "meta": "—— 荒谬猫",
+      "obs": "—— 观察猫",
+      "conn": "—— 专属猫",
+      "rare": "—— 隐藏猫"
+    };
+
+    const faces = ['🎲', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+    const triggers = {
+      1: "result: thinking...",
+      2: "result: cat logic activated",
+      3: "result: this might not make sense...",
+      4: "result: observing...",
+      5: "result: this one feels specific...",
+      6: "result: system error (rare found)"
+    };
+
+    const thoughtModal = document.getElementById('thoughts-modal');
+    const tText = document.getElementById('thought-text');
+    const tImgBox = document.getElementById('thought-cat-img-box');
+    const tImg = document.getElementById('thought-cat-img');
+    const btnAnother = document.getElementById('btn-another-thought');
+    const diceEmoji = document.getElementById('dice-emoji');
+    const sysText = document.getElementById('thought-system-text');
+    let tIsTyping = false;
+
+    // Dice guide logic
+    const diceGuide = document.getElementById('dice-guide-modal');
+    let pressTimer;
+    const showGuide = () => diceGuide.classList.add('show');
+    const hideGuide = () => { clearTimeout(pressTimer); diceGuide.classList.remove('show'); };
+    diceEmoji.addEventListener('mousedown', () => { pressTimer = setTimeout(showGuide, 500); });
+    diceEmoji.addEventListener('touchstart', (e) => { pressTimer = setTimeout(showGuide, 500); }, { passive: true });
+    window.addEventListener('mouseup', hideGuide);
+    window.addEventListener('touchend', hideGuide);
+    window.addEventListener('touchcancel', hideGuide);
+
+    document.getElementById('btn-thought-open').addEventListener('click', () => {
+      initAudio(); if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      thoughtModal.style.display = 'flex';
+      thoughtModal.style.opacity = '0';
+      setTimeout(() => thoughtModal.style.opacity = '1', 50);
+      rollThought();
+    });
+
+    document.getElementById('btn-thought-close').addEventListener('click', () => {
+      thoughtModal.style.opacity = '0';
+      setTimeout(() => {
+        thoughtModal.style.display = 'none';
+        tText.innerHTML = '';
+        tImgBox.style.display = 'none';
+        tImgBox.classList.remove('show');
+        btnAnother.classList.remove('show');
+      }, 400);
+    });
+
+    btnAnother.addEventListener('click', () => {
+      if (tIsTyping) return;
+      rollThought();
+    });
+
+    function rollThought() {
+      tIsTyping = true;
+      btnAnother.classList.remove('show');
+
+      // reset UI
+      tImgBox.classList.remove('show');
+      setTimeout(() => tImgBox.style.display = 'none', 300);
+      tText.innerHTML = '';
+
+      // start roll
+      diceEmoji.textContent = '🎲';
+      diceEmoji.className = 'rolling';
+      sysText.textContent = 'rolling thought...';
+      sysText.className = 'show';
+
+      // rolling sound
+      let rollInt = setInterval(() => {
+        try { playTone(400 + Math.random() * 300, 'sawtooth', 0.05, 0.04); } catch (e) { }
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(rollInt);
+
+        // Rigged Dice logic (5% for rare, completely random for rest)
+        let roll;
+        const rnd = Math.random();
+        if (rnd < 0.05) roll = 6;
+        else roll = Math.floor(Math.random() * 5) + 1; // 1 to 5
+
+        // Stop roll
+        sysText.className = 'show sys-grad-' + roll;
+        diceEmoji.className = 'stopped dice-grad-' + roll;
+        diceEmoji.textContent = faces[roll];
+        sysText.textContent = triggers[roll];
+        document.getElementById('dice-hint-text').classList.add('show');
+        try { playTone(900, 'square', 0.2, 0.1); } catch (e) { } // bing
+
+        // 1 second after stopping, show the cat and type
+        setTimeout(() => {
+          sysText.classList.remove('show'); // fade out hint
+          document.getElementById('dice-hint-text').classList.remove('show');
+          diceEmoji.className = 'stopped'; // clear gradient so it's clean for next roll
+
+          const arr = thoughtCorpus[roll];
+          const thought = arr[Math.floor(Math.random() * arr.length)];
+
+          tImgBox.style.display = 'block';
+          tImgBox.offsetHeight; // reflow
+          tImg.src = thoughtMoods[thought.type];
+          tImgBox.classList.add('show');
+
+          tText.classList.add('typecursor');
+          let idx = 0;
+          const typeWriter = () => {
+            if (idx < thought.t.length) {
+              tText.textContent += thought.t.charAt(idx);
+              try { playTone(800 + Math.random() * 200, 'square', 0.02, 0.02); } catch (e) { }
+              idx++;
+              let delay = 60 + Math.random() * 40;
+              if (['，', '。', '？', '！'].includes(thought.t.charAt(idx - 1))) delay += 300;
+              setTimeout(typeWriter, delay);
+            } else {
+              setTimeout(() => {
+                tText.innerHTML += `<br><span class="thought-sig">${signatures[thought.type]}</span>`;
+                tIsTyping = false;
+                tText.classList.remove('typecursor');
+                btnAnother.classList.add('show');
+                try { playTone(600, 'sine', 0.1, 0.1); } catch (e) { }
+              }, 300);
+            }
+          };
+          setTimeout(typeWriter, 500);
+        }, 1500); // look at dice for 1.5s
+      }, 1200); // roll for 1.2s
     }
-  } catch(e) {}
 
-  // Execute taps
-  await tapDay(1);
-  await new Promise(r => setTimeout(r, 200));
-  await tapDay(2);
-  await new Promise(r => setTimeout(r, 200));
-  await tapDay(3);
-  await new Promise(r => setTimeout(r, 400));
-  
-  // Day 4 aggressive tap
-  await tapDay(4, true);
+    // === AR MOMENT FEATURE ===
+    const pawSvg = `<svg viewBox="0 0 100 100" fill="rgba(255,255,255,0.7)" xmlns="http://www.w3.org/2000/svg">
+  <path d="M47.5,62.9c-8.9,0-16.1-4.8-19.1-12.7c-0.6-1.6-0.3-3.9-0.3-4.5c0-1.8,2.7-3,3.7-2.6c3.2,1,10.1,6.5,15.7,6.5c5.3,0,13.2-6.5,16.5-6.5c1,0,3.3,1.3,3.3,3.1c0,0.5,0.3,3.2-0.5,4.7C63.6,58.8,56.5,62.9,47.5,62.9z"/>
+  <path d="M26.2,43.2c-4.4,0-8-5.3-8-11.8S21.8,20,26.2,20c4.3,0,7.9,5.2,7.9,11.6S30.6,43.2,26.2,43.2z"/>
+  <path d="M41.7,35.6c-4.6,0-8.3-5.9-8.3-13.1C33.4,15.3,37.1,9.4,41.7,9.4s8.2,5.9,8.2,13.1C49.9,29.7,46.2,35.6,41.7,35.6z"/>
+  <path d="M57.4,32.7c-4.2,0-7.6-5.4-7.6-12S53.2,8.6,57.4,8.6c4.1,0,7.5,5.3,7.5,12S61.6,32.7,57.4,32.7z"/>
+  <path d="M72,39c-3.8,0-6.8-4.6-6.8-10.2s3-10.2,6.8-10.2s6.8,4.5,6.8,10.2C78.8,34.4,75.8,39,72,39z"/>
+</svg>`;
 
-  // Day 4 glow and retreat paw
-  document.getElementById('day-4').classList.add('glow');
-  try { catFormant(800, 900, 0.4, 0.4, 0); } catch(e){}
-  introPaw.style.transition = 'transform 0.8s ease-in';
-  introPaw.style.setProperty('--paw-x', `0px`);
-  introPaw.style.setProperty('--paw-y', `0px`);
-  await new Promise(r => setTimeout(r, 600));
+    const arBtn = document.getElementById('ar-trigger-btn');
+    const arOverlay = document.getElementById('ar-overlay');
+    const arIntro = document.getElementById('ar-intro-text');
+    const arCard = document.getElementById('ar-card');
+    const arConc = document.getElementById('ar-conclusion');
+    const arClose = document.getElementById('ar-btn-close');
+    const catPanel = document.getElementById('cat-panel');
 
-  // Trigger Apple-like smooth handwriting animation
-  miaoGlassBanner.style.opacity = '1';
-  miaoNeonText.classList.add('show');
-  
-  // Happy birthday cheer
-  playBirthday();
-  burst(window.innerWidth/2, 80, 20, '#FF85A1');
+    if (arBtn) {
+      arBtn.addEventListener('click', () => {
+        initAudio(); if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        catPanel.style.transition = 'opacity 1s';
+        catPanel.style.opacity = '0';
+        setTimeout(() => catPanel.style.display = 'none', 1000);
 
-  // Wait for handwriting to finish (it takes 3s)
-  await new Promise(r => setTimeout(r, 2600));
-  
-  // Paw swoops back in to tap the banner itself!
-  const bannerTarget = getPawTarget('miao-glass-banner');
-  const bdx = bannerTarget.x - (introPaw.offsetLeft + introPaw.width * 0.5);
-  const bdy = bannerTarget.y - (introPaw.offsetTop + introPaw.height * 0.5);
-  introPaw.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-  introPaw.style.setProperty('--paw-x', `${bdx}px`);
-  introPaw.style.setProperty('--paw-y', `${bdy}px`);
-  await new Promise(r => setTimeout(r, 650));
-  
-  // Banner tap!
-  introPaw.classList.add('paw-strike');
-  try { catFormant(700, 1200, 0.15, 0.2, 0); } catch(e){}
-  miaoGlassBanner.style.transform = 'translate(-50%, -50%) rotate(-5deg) scale(0.9)';
-  await new Promise(r => setTimeout(r, 150));
-  miaoGlassBanner.style.transform = 'translate(-50%, -50%) rotate(-5deg) scale(1)';
-  miaoGlassBanner.style.boxShadow = '0 15px 40px rgba(255,133,161,0.6), inset 0 0 20px rgba(255,255,255,0.8)';
-  fullConfetti(); // Massive confetti on final tap
-  introPaw.classList.remove('paw-strike');
-  await new Promise(r => setTimeout(r, 400));
-  
-  // Paw retreats one last time
-  introPaw.style.transition = 'transform 0.8s ease-in';
-  introPaw.style.setProperty('--paw-x', `0px`);
-  introPaw.style.setProperty('--paw-y', `0px`);
+        arOverlay.style.display = 'flex';
+        setTimeout(() => {
+          arOverlay.classList.add('show');
+          arIntro.classList.add('show');
+        }, 50);
 
-  // Wait a beat, then show button
-  await new Promise(r => setTimeout(r, 400));
-  startBtn.classList.add('show');
-}
+        setTimeout(() => {
+          arIntro.classList.remove('show');
+          setTimeout(() => {
+            arCard.classList.add('show');
+            try { playTone(800, 'sine', 0.5, 0.5); } catch (e) { } // soft intro chime
+          }, 1000);
+        }, 3000); // look around for 3 seconds
+      });
+    }
 
-// === BUTTON START ===
-startBtn.addEventListener('click', () => {
-  initAudio();
-  if(audioCtx.state === 'suspended') audioCtx.resume();
-  playMeow(0);
-  
-  introOverlay.style.opacity = '0';
-  setTimeout(() => introOverlay.style.display = 'none', 800);
-  
-  // Start the main app machinery
-  initMediaPipe();
-  
-  // Birthday celebration on load
-  setTimeout(() => {
-    fullConfetti();
-    burst(window.innerWidth/2, 80, 30, '#FF85A1');
-  }, 1000);
-});
+    arCard.addEventListener('click', () => {
+      arCard.classList.add('dissolve');
+      try { playTone(1200, 'sine', 0.8, 1); playTone(800, 'triangle', 0.5, 1); } catch (e) { } // glass shatter chime
+      startFootprints();
+    });
 
-// === INIT ===
-createBgHearts();
+    const arEndCat = document.getElementById('ar-end-cat');
+    const arLetterCard = document.getElementById('ar-letter-card');
+    const arLetterFrom = document.getElementById('ar-letter-from');
+    const arLetterText = document.getElementById('ar-letter-text');
+    const arBtnLetterClose = document.getElementById('ar-btn-letter-close');
 
-// Add glow effect on hover for the button
-const openBtn = document.getElementById('open-surprise-btn');
-openBtn.addEventListener('click', (e) => {
-  e.target.style.transform = 'scale(0.9)';
-  e.target.style.opacity = '0.5';
-  runIntroSequence();
-});
-</script>
+    arEndCat.addEventListener('click', () => {
+      if (audioCtx) {
+        const burstTime = 0.3;
+        const bufferSize = audioCtx.sampleRate * burstTime;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+        const src = audioCtx.createBufferSource();
+        src.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(3000, audioCtx.currentTime + 0.1);
+        filter.frequency.exponentialRampToValueAtTime(500, audioCtx.currentTime + burstTime);
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + burstTime);
+        src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+        src.start();
+      }
+
+      arEndCat.classList.remove('show');
+      try { playTone(1200, 'square', 0.5, 0.4); playTone(800, 'sine', 0.5, 0.4); } catch (e) { }
+
+      setTimeout(() => {
+        arLetterCard.classList.add('show');
+        setTimeout(() => arLetterFrom.style.opacity = '1', 500);
+
+        const letterMsg = "希望我们不仅只是一起做项目的人\n也可以是能一起分享想法的朋友。";
+        let idx = 0;
+        arLetterText.innerHTML = "";
+
+        setTimeout(() => {
+          const typeW = setInterval(() => {
+            if (idx >= letterMsg.length) {
+              clearInterval(typeW);
+              arBtnLetterClose.style.opacity = '1';
+              return;
+            }
+            if (letterMsg[idx] === '\n') {
+              arLetterText.innerHTML += '<br>';
+            } else {
+              arLetterText.innerHTML += letterMsg[idx];
+              try { playTone(600 + Math.random() * 200, 'sine', 0.02, 0.1); } catch (e) { }
+            }
+            idx++;
+          }, 120); // Nice and slow
+        }, 1200);
+
+      }, 800);
+    });
+
+    arBtnLetterClose.addEventListener('click', () => {
+      arLetterCard.classList.remove('show');
+      try { playTone(800, 'sine', 0.3, 0.5); } catch (e) { }
+
+      setTimeout(() => {
+        arConc.textContent = "happy birthday, miao.";
+        arConc.style.opacity = '1';
+        arClose.style.opacity = '1';
+        arClose.style.pointerEvents = 'auto';
+      }, 1000);
+    });
+
+    function startFootprints() {
+      let stepCount = 0;
+      const maxSteps = 6;
+
+      let walkInt = setInterval(() => {
+        if (stepCount >= maxSteps) {
+          clearInterval(walkInt);
+          setTimeout(() => {
+            arEndCat.style.left = `calc(50% - 60px)`;
+            arEndCat.style.top = `calc(${window.innerHeight * 0.70 - (maxSteps * 55)}px - 50px)`;
+            arEndCat.classList.add('show');
+            try { playTone(700, 'sine', 0.4, 0.6); } catch (e) { }
+          }, 1000);
+          return;
+        }
+
+        const paw = document.createElement('div');
+        paw.className = 'ar-paw';
+        paw.innerHTML = pawSvg;
+
+        // Bottom-center to top-center trajectory
+        const baseX = window.innerWidth / 2;
+        const baseY = window.innerHeight * 0.70;
+        const yProg = baseY - (stepCount * 55);
+
+        const isLeft = stepCount % 2 === 0;
+        const xProg = baseX + (isLeft ? -30 : 30) + (Math.sin(stepCount * 0.4) * 20);
+        const rotation = isLeft ? -15 : 15;
+
+        paw.style.left = `${xProg - 25}px`;
+        paw.style.top = `${yProg - 25}px`;
+        paw.style.transform = `rotate(${rotation}deg) scale(0.5)`;
+
+        arOverlay.appendChild(paw);
+
+        try { playTone(400 + (Math.random() * 50), 'sine', 0.1, 0.4); } catch (e) { }
+
+        setTimeout(() => { paw.style.opacity = '1'; paw.style.transform = `rotate(${rotation}deg) scale(1)`; }, 50);
+        setTimeout(() => { paw.style.opacity = '0'; }, 2000);
+        setTimeout(() => { paw.remove(); }, 3500);
+
+        stepCount++;
+      }, 1000);
+    }
+
+    arClose.addEventListener('click', () => {
+      arConc.style.opacity = '0';
+      arClose.style.opacity = '0';
+      arClose.style.pointerEvents = 'none';
+      arOverlay.classList.remove('show');
+
+      setTimeout(() => {
+        arOverlay.style.display = 'none';
+        arCard.classList.remove('show', 'dissolve');
+
+        catPanel.style.display = 'block';
+        setTimeout(() => catPanel.style.opacity = '1', 50);
+      }, 1000);
+    });
+  </script>
 </body>
+
 </html>
